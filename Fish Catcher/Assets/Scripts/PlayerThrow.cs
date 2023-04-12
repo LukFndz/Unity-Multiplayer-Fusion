@@ -6,6 +6,7 @@ public class PlayerThrow : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
     private bool _isFishing;
+    private bool _isInMinigame;
     void Start()
     {
         
