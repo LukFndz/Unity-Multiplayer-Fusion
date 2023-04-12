@@ -9,7 +9,6 @@ public class Player : MonoBehaviour
     [SerializeField] private float _turnSpeed;
     [SerializeField] private CharacterController _controller;
 
-
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -39,5 +38,17 @@ public class Player : MonoBehaviour
         {
             _controller.Move(movement);
         }
+    }
+
+    public void BlockInputs()
+    {
+        _speed = 0;
+        _turnSpeed = 0;
+    }
+
+    public void UnlockInputs()
+    {
+        _speed = 5;
+        _turnSpeed = 2;
     }
 }
