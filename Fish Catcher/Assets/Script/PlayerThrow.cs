@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class PlayerThrow : MonoBehaviour
+using Fusion;
+public class PlayerThrow : NetworkBehaviour
 {
     [SerializeField] private Animator _animatorCaña;
     [SerializeField] private Animator _animatorSelect;
@@ -23,7 +23,7 @@ public class PlayerThrow : MonoBehaviour
         
     }
 
-    // Update is called once per frame
+    #region STANDALONE
     void Update()
     {
         if (Input.GetMouseButton(0) && !_isFishing)
@@ -34,9 +34,9 @@ public class PlayerThrow : MonoBehaviour
             _isFishing = true;
         }
 
-        if(_isInMinigame)
+        if (_isInMinigame)
         {
-            if(Input.GetMouseButton(0))
+            if (Input.GetMouseButton(0))
             {
                 _animatorSelect.speed = 0;
 
@@ -59,6 +59,46 @@ public class PlayerThrow : MonoBehaviour
         }
     }
 
+    #endregion
+    #region NETWORK
+    //void Update()
+    //{
+    //    if (GetInput(out NetworkInputData networkInputData))
+    //    {
+    //        if (networkInputData.isFishPressed && !_isFishing)
+    //        {
+    //            _animatorSelect.speed = 1;
+    //            _animatorSelect.Play("Empty");
+    //            _animatorCaña.Play("Throw");
+    //            _isFishing = true;
+    //        }
+
+    //        if (_isInMinigame)
+    //        {
+    //            if (Input.GetMouseButton(0))
+    //            {
+    //                _animatorSelect.speed = 0;
+
+    //                if (_selectTransform.anchoredPosition.x > 49 && _selectTransform.anchoredPosition.x < 60)
+    //                {
+    //                    _animatorCaña.Rebind();
+    //                    _animatorCaña.Update(0f);
+    //                    _animatorCaña.gameObject.SetActive(false);
+    //                    _animatorSelect.gameObject.SetActive(false);
+    //                    _animatorTabla.gameObject.SetActive(true);
+    //                    GetComponent<Player>().UnlockInputs();
+    //                    _haveFish = true;
+    //                }
+    //                else
+    //                {
+    //                    _animatorCaña.Play("Back");
+    //                    StartCoroutine(WaitUnlock());
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
+    #endregion
     public void StartMiniGame()
     {
         _isInMinigame = true;
