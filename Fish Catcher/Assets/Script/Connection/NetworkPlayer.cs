@@ -5,7 +5,6 @@ using Fusion;
 
 public class NetworkPlayer : NetworkBehaviour
 {
-
     public static NetworkPlayer Local { get; set; }
 
     public override void Spawned()
@@ -18,7 +17,6 @@ public class NetworkPlayer : NetworkBehaviour
         else
         {
             Debug.Log("[CUSTOM MESSAGE] Spawned Other Player");
-
         }
     }
 

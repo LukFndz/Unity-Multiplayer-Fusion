@@ -7,75 +7,39 @@ public class Player : NetworkBehaviour
     private Vector3 _move;
     [SerializeField] private float _speed;
     [SerializeField] private float _turnSpeed;
-    [SerializeField] private CharacterController _controller;
+    //[SerializeField] private CharacterController _controller;
+    [SerializeField] private NetworkRigidbody _rbNet;
+    [SerializeField] private GameObject _canvas;
 
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        _rbNet = GetComponent<NetworkRigidbody>();
+        CanvasManager.Instance.AddCanvas(_canvas);
     }
 
-    Vector2 rotate;
-    #region STANDALONE
-    void Update()
+    public void Movement(NetworkInputData data)
     {
-        Vector3 rawAxis = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
-
-        rotate.x += Input.GetAxis("Mouse X") * _turnSpeed;
-
-        rotate.y += Input.GetAxis("Mouse Y") * _turnSpeed;
-
-        Vector3 movement = Vector3.zero;
-
-        _move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-
-        movement += transform.forward * _move.z * _speed * Time.deltaTime;
-        movement += transform.right * _move.x * _speed * Time.deltaTime;
+        Vector3 direction = _rbNet.Rigidbody.rotation * data.movementInput;
+        if (data.movementInput.magnitude > 0.01)
+            _rbNet.Rigidbody.MovePosition(_rbNet.Rigidbody.position + direction * Time.fixedDeltaTime * _speed);
 
 
-        transform.localRotation = Quaternion.Euler(0, rotate.x, 0);
-        if (rawAxis.magnitude > 0.01f)
+        if (_turnSpeed > 0)
         {
-            _controller.Move(movement);
+            transform.localRotation = Quaternion.Euler(-data.rotationInput.y, data.rotationInput.x * _turnSpeed, 0);    
         }
     }
-    #endregion
 
-    #region NETWORK
-    //public void Movement(NetworkInputData data)
-    //{
+    public override void FixedUpdateNetwork()
+    {
+        if (GetInput(out NetworkInputData networkInputData))
+        {
+            Movement(networkInputData);
+        }
+    }
 
-    //    //rotate.x += Input.GetAxis("Mouse X") * _turnSpeed;
-
-    //    //rotate.y += Input.GetAxis("Mouse Y") * _turnSpeed;
-
-
-    //    //_move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-
-
-    //    Vector3 movement = Vector3.zero;
-    //    movement += transform.forward * data.movementInput.z * _speed * Time.deltaTime;
-    //    movement += transform.right * data.movementInput.x * _speed * Time.deltaTime;
-
-
-    //    transform.localRotation = Quaternion.Euler(0, data.rotationInput.x * _turnSpeed, 0);
-    //    if (movement.magnitude > 0.01f)
-    //    {
-    //        Debug.Log("MOVE");
-    //        _controller.Move(movement);
-    //    }
-    //}
-
-    //public void Update()
-    //{
-    //    if(GetInput(out NetworkInputData networkInputData))
-    //    {
-    //        Movement(networkInputData);
-    //    }
-    //}
-
-
-    #endregion
     public void BlockInputs()
     {
         _speed = 0;

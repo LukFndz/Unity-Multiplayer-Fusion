@@ -432,6 +432,8 @@ GameObject:
   - component: {fileID: 3656012964076416837}
   - component: {fileID: 3656012964076416838}
   - component: {fileID: 3656012964076416839}
+  - component: {fileID: 7642770572621970272}
+  - component: {fileID: 6139525188872237115}
   m_Layer: 0
   m_Name: "Ca\xF1a"
   m_TagString: Untagged
@@ -490,6 +492,60 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 3656012965302233537}
   _playerThrow: {fileID: 3656012965302233539}
+--- !u!114 &7642770572621970272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3656012964076416836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 506319458, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  Animator: {fileID: 3656012964076416838}
+  TotalWords: 0
+  SyncSettings: 79
+  FloatAccuracy:
+    _value: 0
+    _inverse: 0
+    _hash: -814817977
+  TimeAccuracy:
+    _value: 0
+    _inverse: 0
+    _hash: 1061325578
+  WeightAccuracy:
+    _value: 0
+    _inverse: 0
+    _hash: -814817977
+  StateHashes: 00000000c01206a9425d4a2c336e528eb1211e0b096efccd5b3483e4
+  TriggerHashes: 00000000
+--- !u!114 &6139525188872237115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3656012964076416836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectInterest: 1
+  DefaultInterestGroups: []
+  DestroyWhenStateAuthorityLeaves: 0
+  AllowStateAuthorityOverride: 1
+  AoiPositionSource: {fileID: 0}
+  Flags: 3073
+  NetworkGuid:
+    RawGuidValue: 00000000000000000000000000000000
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 7642770572621970272}
+  SimulationBehaviours: []
 --- !u!1 &3656012964132401443
 GameObject:
   m_ObjectHideFlags: 0
@@ -1013,6 +1069,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3656012964575583726}
   - component: {fileID: 3656012964575583727}
+  - component: {fileID: 5138441546450162395}
+  - component: {fileID: 2633102647393581559}
   m_Layer: 5
   m_Name: FishBar
   m_TagString: Untagged
@@ -1064,6 +1122,60 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &5138441546450162395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3656012964575583725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 506319458, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  Animator: {fileID: 3656012964575583727}
+  TotalWords: 0
+  SyncSettings: 79
+  FloatAccuracy:
+    _value: 0
+    _inverse: 0
+    _hash: -814817977
+  TimeAccuracy:
+    _value: 0
+    _inverse: 0
+    _hash: 1061325578
+  WeightAccuracy:
+    _value: 0
+    _inverse: 0
+    _hash: -814817977
+  StateHashes: 00000000c01206a9425d4a2cc13bed15f288c822
+  TriggerHashes: 00000000
+--- !u!114 &2633102647393581559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3656012964575583725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectInterest: 1
+  DefaultInterestGroups: []
+  DestroyWhenStateAuthorityLeaves: 0
+  AllowStateAuthorityOverride: 1
+  AoiPositionSource: {fileID: 0}
+  Flags: 134145
+  NetworkGuid:
+    RawGuidValue: 00000000000000000000000000000000
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 5138441546450162395}
+  SimulationBehaviours: []
 --- !u!1 &3656012964879328247
 GameObject:
   m_ObjectHideFlags: 0
@@ -1075,6 +1187,8 @@ GameObject:
   - component: {fileID: 3656012964879328248}
   - component: {fileID: 3656012964879328249}
   - component: {fileID: 3656012964879328250}
+  - component: {fileID: 8628878496543656360}
+  - component: {fileID: 598357019421550305}
   m_Layer: 0
   m_Name: Pez
   m_TagString: Untagged
@@ -1138,6 +1252,60 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerThrow: {fileID: 3656012965302233539}
+--- !u!114 &8628878496543656360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3656012964879328247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 506319458, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  Animator: {fileID: 3656012964879328249}
+  TotalWords: 0
+  SyncSettings: 79
+  FloatAccuracy:
+    _value: 0
+    _inverse: 0
+    _hash: -814817977
+  TimeAccuracy:
+    _value: 0
+    _inverse: 0
+    _hash: 1061325578
+  WeightAccuracy:
+    _value: 0
+    _inverse: 0
+    _hash: -814817977
+  StateHashes: 000000005b648530d92bc9b5ada5e62446666ed9
+  TriggerHashes: 00000000
+--- !u!114 &598357019421550305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3656012964879328247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectInterest: 1
+  DefaultInterestGroups: []
+  DestroyWhenStateAuthorityLeaves: 0
+  AllowStateAuthorityOverride: 1
+  AoiPositionSource: {fileID: 0}
+  Flags: 134145
+  NetworkGuid:
+    RawGuidValue: 00000000000000000000000000000000
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 8628878496543656360}
+  SimulationBehaviours: []
 --- !u!1 &3656012964901114856
 GameObject:
   m_ObjectHideFlags: 0
@@ -1647,6 +1815,8 @@ GameObject:
   - component: {fileID: 3656012965302233540}
   - component: {fileID: 3656012965302233541}
   - component: {fileID: 1888575776629024766}
+  - component: {fileID: 3233712024552748807}
+  - component: {fileID: -3765611467059826335}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1661,8 +1831,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3656012965302233564}
-  m_LocalRotation: {x: -0, y: 0.7165383, z: -0, w: 0.69754785}
-  m_LocalPosition: {x: -0.6, y: 1.57, z: 5.15}
+  m_LocalRotation: {x: 0, y: -0.005235964, z: 0, w: 0.9999863}
+  m_LocalPosition: {x: -0.01, y: 1.59, z: 1.09}
   m_LocalScale: {x: 1, y: 1.2659, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1731,9 +1901,9 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3656012965302233564}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 37d0c66d48d46cf4d82ee2a0a19604ad, type: 2}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
@@ -1747,7 +1917,7 @@ CharacterController:
   m_GameObject: {fileID: 3656012965302233564}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Height: 2.0000002
   m_Radius: 0.5
@@ -1771,7 +1941,8 @@ MonoBehaviour:
   _interpolationDataSource: 0
   _speed: 5
   _turnSpeed: 2
-  _controller: {fileID: 3656012965302233538}
+  _rbNet: {fileID: 0}
+  _canvas: {fileID: 3656012964058819882}
 --- !u!114 &3656012965302233539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1810,11 +1981,16 @@ MonoBehaviour:
   Flags: 2305
   NetworkGuid:
     RawGuidValue: 5832ab234f3633140baf1ebe144e2af8
-  NestedObjects: []
+  NestedObjects:
+  - {fileID: 6139525188872237115}
+  - {fileID: 598357019421550305}
+  - {fileID: 2633102647393581559}
   NetworkedBehaviours:
   - {fileID: 3656012965302233537}
   - {fileID: 3656012965302233539}
   - {fileID: 3656012965302233541}
+  - {fileID: 1888575776629024766}
+  - {fileID: -3765611467059826335}
   SimulationBehaviours: []
 --- !u!114 &3656012965302233541
 MonoBehaviour:
@@ -1841,6 +2017,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff60bbaf2deae9b4f97886e0404dd991, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+--- !u!54 &3233712024552748807
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3656012965302233564}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 116
+  m_CollisionDetection: 0
+--- !u!114 &-3765611467059826335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3656012965302233564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1710889294, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  InterpolationSpace: 0
+  InterpolationTarget: {fileID: 0}
+  InterpolateErrorCorrection: 1
+  InterpolatedErrorCorrectionSettings:
+    MinRate: 3.3
+    MaxRate: 10
+    PosBlendStart: 0.25
+    PosBlendEnd: 1
+    PosMinCorrection: 0.025
+    PosTeleportDistance: 2
+    RotBlendStart: 0.1
+    RotBlendEnd: 0.5
+    RotTeleportRadians: 1.5
+  UseLegacySharedModeInterpolation: 0
+  TargetInterpolationDelay: 0.03
 --- !u!1 &3656012965570102307
 GameObject:
   m_ObjectHideFlags: 0

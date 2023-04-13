@@ -8,8 +8,9 @@ using System;
 public class SpawnNetworkPlayer : MonoBehaviour, INetworkRunnerCallbacks
 {
     [SerializeField] private NetworkPlayer _player;
-
     CharacterInputHandler _inputHandler;
+
+    [SerializeField] private Transform[] _spawnPoints;
 
     #region CALLBACKS
     public void OnConnectedToServer(NetworkRunner runner)
@@ -17,7 +18,8 @@ public class SpawnNetworkPlayer : MonoBehaviour, INetworkRunnerCallbacks
         if(runner.Topology == SimulationConfig.Topologies.Shared)
         {
             Debug.Log("[CUSTOM MESSAGE] On Connected Server - Spawn Player as Local");
-            runner.Spawn(_player, Vector3.zero, Quaternion.identity, runner.LocalPlayer);
+            var obj = runner.Spawn(_player, _spawnPoints[runner.LocalPlayer.PlayerId].position, Quaternion.identity, runner.LocalPlayer);
+            obj.name = "Player_" + runner.LocalPlayer.PlayerId;
         }
     }
 

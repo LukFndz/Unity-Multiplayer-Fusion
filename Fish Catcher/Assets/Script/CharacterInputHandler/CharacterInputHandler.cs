@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterInputHandler : MonoBehaviour
+public class CharacterInputHandler : NetworkBehaviour
 {
     Player _player;
     private Vector3 _move;
@@ -23,6 +23,8 @@ public class CharacterInputHandler : MonoBehaviour
         _move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         _rot.x += Input.GetAxis("Mouse X");
         _rot.y += Input.GetAxis("Mouse Y");
+
+        _rot.y = Mathf.Clamp(_rot.y, -20, 20);
 
         if (Input.GetMouseButton(0))
             _isFishing = true;
