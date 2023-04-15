@@ -18,9 +18,16 @@ public class PlayerThrow : NetworkBehaviour
     public Animator AnimatorSelect { get => _animatorSelect; set => _animatorSelect = value; }
     public Animator AnimatorTabla { get => _animatorTabla; set => _animatorTabla = value; }
 
-    void Start()
+    public void SetAnimSelect(Animator anim, RectTransform rect, TMPro.TextMeshProUGUI txt)
     {
-        
+        _animatorSelect = anim;
+        _selectTransform = rect;
+        _txtScore = txt;
+    }
+
+    private void Start()
+    {
+        FindObjectOfType<CanvasPlayer>().SetPlayerAnim(this);
     }
 
     #region STANDALONE

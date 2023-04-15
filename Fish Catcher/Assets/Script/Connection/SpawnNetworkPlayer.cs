@@ -18,8 +18,10 @@ public class SpawnNetworkPlayer : MonoBehaviour, INetworkRunnerCallbacks
         if(runner.Topology == SimulationConfig.Topologies.Shared)
         {
             Debug.Log("[CUSTOM MESSAGE] On Connected Server - Spawn Player as Local");
-            var obj = runner.Spawn(_player, _spawnPoints[runner.LocalPlayer.PlayerId].position, Quaternion.identity, runner.LocalPlayer);
-            obj.name = "Player_" + runner.LocalPlayer.PlayerId;
+            runner.Spawn(_player, _spawnPoints[runner.LocalPlayer.PlayerId].position, Quaternion.identity, runner.LocalPlayer);
+
+            //var list = new List<PlayerRef>(runner.ActivePlayers).Count;
+            //FindObjectOfType<CanvasPlayer>().SetGameCount(list);
         }
     }
 

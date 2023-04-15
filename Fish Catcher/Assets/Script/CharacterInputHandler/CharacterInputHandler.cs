@@ -10,8 +10,15 @@ public class CharacterInputHandler : NetworkBehaviour
     private Vector3 _move;
     private Vector2 _rot;
     private bool _isFishing;
+
+    NetworkInputData _data;
+
     void Start()
     {
+        _data = new NetworkInputData();
+        _data.movementInput = Vector3.zero;
+        _data.isFishPressed = false;
+        _data.rotationInput = Vector3.zero;
         _player = GetComponent<Player>();
     }
 
@@ -32,8 +39,6 @@ public class CharacterInputHandler : NetworkBehaviour
 
     public NetworkInputData GetNetworkInput()
     {
-        NetworkInputData _data = new NetworkInputData();
-
         _data.movementInput = _move;
         _data.rotationInput = _rot;
         _data.isFishPressed = _isFishing;

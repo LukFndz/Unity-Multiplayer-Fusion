@@ -6,29 +6,26 @@ using Fusion;
 public class NetworkPlayer : NetworkBehaviour
 {
     public static NetworkPlayer Local { get; set; }
-
     public override void Spawned()
     {
+        transform.name = "Player_" + Object.Id;
         if(Object.HasInputAuthority)
         {
             Local = this;
+
             Debug.Log("[CUSTOM MESSAGE] Spawned Own Player");
+            Camera.main.gameObject.SetActive(false);
         }
         else
         {
             Debug.Log("[CUSTOM MESSAGE] Spawned Other Player");
+            Camera localCamera = GetComponentInChildren<Camera>(true);
+            localCamera.enabled = false;
+
+            AudioListener localListener = GetComponentInChildren<AudioListener>(true);
+            localListener.enabled = false;
         }
+
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
