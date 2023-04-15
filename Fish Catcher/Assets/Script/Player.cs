@@ -18,11 +18,13 @@ public class Player : NetworkBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         _rbNet = GetComponent<NetworkRigidbody>();
+        BlockInputs();
     }
 
     public override void Spawned()
     {
         FindObjectOfType<CanvasPlayer>().SetGameCount();
+        FindObjectOfType<CanvasPlayer>().SetPlayerInput(this);
     }
 
     public void Movement(NetworkInputData data)

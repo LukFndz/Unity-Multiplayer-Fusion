@@ -17,8 +17,10 @@ public class CanvasPlayer : MonoBehaviour
 
     public event Action OnUpdatePlayers = delegate { };
 
-
     public event Action<float> OnUpdateTime = delegate { };
+
+    public event Action OnUnlockInputs = delegate { };
+
 
     public void Start()
     {
@@ -27,6 +29,11 @@ public class CanvasPlayer : MonoBehaviour
         OnUpdatePlayers += SetGameCount;
 
         OnUpdateTime += _timerPrefab.UpdateTimer;
+    }
+
+    public void SetPlayerInput(Player player)
+    {
+        OnUnlockInputs += player.UnlockInputs;
     }
 
     public void SetPlayerAnim(PlayerThrow player)
@@ -38,8 +45,11 @@ public class CanvasPlayer : MonoBehaviour
     
     void LateUpdate()
     {
-        if (_playerCount >= 2)
+        if (_playerCount >= 2 && !_startGame)
+        {
             _startGame = true;
+            OnUnlockInputs();
+        }
 
         if (_startGame)
         {
