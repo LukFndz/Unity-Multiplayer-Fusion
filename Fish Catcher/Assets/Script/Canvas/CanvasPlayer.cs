@@ -7,7 +7,6 @@ using Fusion;
 
 public class CanvasPlayer : NetworkBehaviour
 {
-
     [SerializeField] private Timer _timerPrefab;
     [SerializeField] private Animator _animSelect;
     [SerializeField] private RectTransform _rectSelect;
@@ -17,27 +16,25 @@ public class CanvasPlayer : NetworkBehaviour
 
     public event Action OnUpdatePlayers = delegate { };
 
-    public event Action<float> OnUpdateTime = delegate { };
+    public event Action OnEndTime = delegate { };
 
     public event Action OnUnlockInputs = delegate { };
 
 
     public void Start()
     {
-
         OnUpdatePlayers += SetGameCount;
-
-        //OnUpdateTime += _timerPrefab.UpdateTimer;
     }
 
     public override void Spawned()
     {
-        timer = 30;
+        timer = 10;
     }
 
     public void SetPlayerInput(Player player)
     {
         OnUnlockInputs += player.UnlockInputs;
+        OnEndTime += player.BlockInputs;
     }
 
     public void SetPlayerAnim(PlayerThrow player)
@@ -46,6 +43,7 @@ public class CanvasPlayer : NetworkBehaviour
     }
 
     private bool _startGame;
+    private bool _endGame;
     
     [Networked]
     public float timer { get; set; }
@@ -57,7 +55,7 @@ public class CanvasPlayer : NetworkBehaviour
             OnUnlockInputs();
         }
 
-        if (_startGame)
+        if (_startGame && !_endGame)
         {
             //OnUpdateTime(_timer);
             if(Object.HasStateAuthority)
@@ -72,6 +70,15 @@ public class CanvasPlayer : NetworkBehaviour
     void RPC_SetTimer(float time, RpcInfo info = default)
     {
         _timerPrefab.UpdateTimer(time);
+    
+        if(timer <= 0)
+        {
+            timer = 0;
+            _timerPrefab.UpdateTimer(0);
+            OnEndTime();
+            _endGame = true;
+            FindObjectOfType<ScoreManager>().ActiveWinnerCanvas();
+        }
     }
 
     public void SetGameCount()

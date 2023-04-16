@@ -14,8 +14,7 @@ public class PlayerThrow : NetworkBehaviour
 
     private bool _haveFish;
 
-    [Networked(OnChanged = nameof(ChangeScore))]
-    public int score { get; set; }
+    private int _score;
 
     public Animator AnimatorSelect { get => _animatorSelect; set => _animatorSelect = value; }
     public Animator AnimatorTabla { get => _animatorTabla; set => _animatorTabla = value; }
@@ -30,7 +29,7 @@ public class PlayerThrow : NetworkBehaviour
     private void Start()
     {
         FindObjectOfType<CanvasPlayer>().SetPlayerAnim(this);
-        score = 0;
+        _score = 0;
     }
 
     #region STANDALONE
@@ -130,7 +129,8 @@ public class PlayerThrow : NetworkBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E) && _haveFish)
             {
-                score++;
+                _score++;
+                SendScore();
                 GetComponent<Player>().BlockInputs();
                 _animatorTabla.Play("BackTabla");
                 _haveFish = false;
@@ -138,23 +138,31 @@ public class PlayerThrow : NetworkBehaviour
         }
     }
 
-    static void ChangeScore(Changed<PlayerThrow> changed)
+    public void SetScoreUI()
     {
-        float nScore = changed.Behaviour.score;
-        changed.LoadOld();
-
-        if(changed.Behaviour.score < nScore)
-        {
-            changed.Behaviour.SetScoreUI(nScore);
-            Debug.Log("NEW: " + nScore);
-        }
-    }
-
-    public void SetScoreUI(float nScore)
-    {
-        _txtScore.text = score.ToString();
+        _txtScore.text = _score.ToString();
         _isFishing = false;
         _isInMinigame = false;
         _animatorCaña.gameObject.SetActive(true);
+    }
+
+    public void SendScore()
+    {
+        RPC_SendScore(transform.name,_score);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            _score++;
+            SendScore();
+        }
+    }
+
+    [Rpc(RpcSources.All , RpcTargets.All)]
+    public void RPC_SendScore(string name, int score, RpcInfo info = default)
+    {
+        FindObjectOfType<ScoreManager>().RPC_SetScore(transform.name, _score); 
     }
 }

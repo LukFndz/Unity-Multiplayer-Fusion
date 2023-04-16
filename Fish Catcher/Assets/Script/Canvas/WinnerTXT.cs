@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Timer : MonoBehaviour
+public class WinnerTXT : MonoBehaviour
 {
     private TMPro.TextMeshProUGUI _txtTimer;
 
@@ -11,11 +12,12 @@ public class Timer : MonoBehaviour
         //FindObjectOfType<CanvasPlayer>().OnUpdateTime += UpdateTimer;
 
         _txtTimer = GetComponent<TMPro.TextMeshProUGUI>();
+        GetComponentInParent<Image>().gameObject.SetActive(false);
     }
 
 
-    public void UpdateTimer(float timer)
+    public void UpdateWinner(string nick)
     {
-        _txtTimer.text = timer.ToString("F0");
+        _txtTimer.text = "Winner is: " + nick;
     }
 }
