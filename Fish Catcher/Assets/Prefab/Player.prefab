@@ -194,6 +194,7 @@ GameObject:
   - component: {fileID: 3656012964076416839}
   - component: {fileID: 7642770572621970272}
   - component: {fileID: 6139525188872237115}
+  - component: {fileID: 8523847795455076159}
   m_Layer: 0
   m_Name: "Ca\xF1a"
   m_TagString: Untagged
@@ -306,6 +307,19 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: 7642770572621970272}
   SimulationBehaviours: []
+--- !u!65 &8523847795455076159
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3656012964076416836}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.34000874, y: 0.14226747, z: 2.3280377}
+  m_Center: {x: 0.031065315, y: 0.8658856, z: 1.5718117}
 --- !u!1 &3656012964132401443
 GameObject:
   m_ObjectHideFlags: 0

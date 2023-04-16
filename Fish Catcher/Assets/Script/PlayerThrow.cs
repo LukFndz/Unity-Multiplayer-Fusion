@@ -11,13 +11,15 @@ public class PlayerThrow : NetworkBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI _txtScore;
     private bool _isFishing;
     private bool _isInMinigame;
-
+    private bool _blockFish;
     private bool _haveFish;
 
     private int _score;
 
+    private bool _onZone = false;
     public Animator AnimatorSelect { get => _animatorSelect; set => _animatorSelect = value; }
     public Animator AnimatorTabla { get => _animatorTabla; set => _animatorTabla = value; }
+    public bool OnZone { get => _onZone; set => _onZone = value; }
 
     public void SetAnimSelect(Animator anim, RectTransform rect, TMPro.TextMeshProUGUI txt)
     {
@@ -30,6 +32,11 @@ public class PlayerThrow : NetworkBehaviour
     {
         FindObjectOfType<CanvasPlayer>().SetPlayerAnim(this);
         _score = 0;
+    }
+
+    public override void Spawned()
+    {
+        GetComponent<PlayerThrow>().BlockFish();
     }
 
     #region STANDALONE
@@ -72,36 +79,40 @@ public class PlayerThrow : NetworkBehaviour
     #region NETWORK
     public override void FixedUpdateNetwork()
     {
-        if (GetInput(out NetworkInputData networkInputData))
+        if(!_blockFish)
         {
-            if (networkInputData.isFishPressed && !_isFishing)
+            if (GetInput(out NetworkInputData networkInputData))
             {
-                _animatorSelect.speed = 1;
-                _animatorSelect.Play("Empty");
-                _animatorCaña.Play("Throw");
-                _isFishing = true;
-            }
-
-            if (_isInMinigame)
-            {
-                if (Input.GetMouseButton(0))
+                if (networkInputData.isFishPressed && !_isFishing && _onZone)
                 {
-                    _animatorSelect.speed = 0;
+                    _animatorSelect.speed = 1;
+                    _animatorSelect.Play("Empty");
+                    _animatorCaña.Play("Throw");
+                    _isFishing = true;
+                }
 
-                    if (_selectTransform.anchoredPosition.x > 49 && _selectTransform.anchoredPosition.x < 60)
+                if (_isInMinigame)
+                {
+                    if (Input.GetMouseButton(0))
                     {
-                        _animatorCaña.Rebind();
-                        _animatorCaña.Update(0f);
-                        _animatorCaña.gameObject.SetActive(false);
-                        _animatorSelect.gameObject.SetActive(false);
-                        _animatorTabla.gameObject.SetActive(true);
-                        GetComponent<Player>().UnlockInputs();
-                        _haveFish = true;
-                    }
-                    else
-                    {
-                        _animatorCaña.Play("Back");
-                        StartCoroutine(WaitUnlock());
+                        UnlockFish();
+                        _animatorSelect.speed = 0;
+
+                        if (_selectTransform.anchoredPosition.x > 49 && _selectTransform.anchoredPosition.x < 61)
+                        {
+                            _animatorCaña.Rebind();
+                            _animatorCaña.Update(0f);
+                            _animatorCaña.gameObject.SetActive(false);
+                            _animatorSelect.gameObject.SetActive(false);
+                            _animatorTabla.gameObject.SetActive(true);
+                            GetComponent<Player>().UnlockInputs();
+                            _haveFish = true;
+                        }
+                        else
+                        {
+                            _animatorCaña.Play("Back");
+                            StartCoroutine(WaitUnlock());
+                        }
                     }
                 }
             }
@@ -151,18 +162,21 @@ public class PlayerThrow : NetworkBehaviour
         RPC_SendScore(transform.name,_score);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            _score++;
-            SendScore();
-        }
-    }
-
     [Rpc(RpcSources.All , RpcTargets.All)]
     public void RPC_SendScore(string name, int score, RpcInfo info = default)
     {
         FindObjectOfType<ScoreManager>().RPC_SetScore(transform.name, _score); 
     }
+    
+    public void BlockFish()
+    {
+        _blockFish = true;
+    }
+
+    public void UnlockFish()
+    {
+        _blockFish = false;
+    }
+
 }
+

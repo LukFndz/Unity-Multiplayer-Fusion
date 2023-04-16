@@ -57,6 +57,7 @@ public class Player : NetworkBehaviour
 
     public void UnlockInputs()
     {
+        GetComponent<PlayerThrow>().UnlockFish();
         _speed = 5;
         _turnSpeed = 2;
     }

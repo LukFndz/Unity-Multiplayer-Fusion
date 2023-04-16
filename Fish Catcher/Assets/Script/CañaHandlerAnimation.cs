@@ -14,4 +14,23 @@ public class CañaHandlerAnimation : MonoBehaviour
         _playerThrow.StartMiniGame();
         _player.BlockInputs();
     }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Limit")
+        {
+            Debug.Log("ACA");
+            _playerThrow.OnZone = true;
+        }
+        
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Limit")
+        {
+            _playerThrow.OnZone = false;
+        }
+    }
 }

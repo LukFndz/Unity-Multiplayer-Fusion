@@ -28,7 +28,7 @@ public class CanvasPlayer : NetworkBehaviour
 
     public override void Spawned()
     {
-        timer = 10;
+        timer = 90;
     }
 
     public void SetPlayerInput(Player player)
