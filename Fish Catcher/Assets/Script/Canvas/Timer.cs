@@ -4,14 +4,10 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
-
-    private float _timer;
     private TMPro.TextMeshProUGUI _txtTimer;
 
     private void Start()
     {
-        _timer = 30;
-
         FindObjectOfType<CanvasPlayer>().OnUpdateTime += UpdateTimer;
 
         _txtTimer = GetComponent<TMPro.TextMeshProUGUI>();
@@ -20,6 +16,7 @@ public class Timer : MonoBehaviour
 
     public void UpdateTimer(float timer)
     {
+        Debug.Log("Timer");
         _txtTimer.text = timer.ToString("F0");
     }
 }

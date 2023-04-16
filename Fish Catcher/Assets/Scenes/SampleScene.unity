@@ -510,6 +510,7 @@ GameObject:
   - component: {fileID: 248021404}
   - component: {fileID: 248021403}
   - component: {fileID: 248021407}
+  - component: {fileID: 248021408}
   m_Layer: 5
   m_Name: PlayerUICanvas
   m_TagString: Untagged
@@ -613,11 +614,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 671ed0121beba0a4f87a982b909ed2be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   _timerPrefab: {fileID: 2077319112}
   _animSelect: {fileID: 144211366}
   _rectSelect: {fileID: 64988818}
   _txtScore: {fileID: 1929145500}
   _timer: 30
+--- !u!114 &248021408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 248021402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectInterest: 1
+  DefaultInterestGroups: []
+  DestroyWhenStateAuthorityLeaves: 0
+  AllowStateAuthorityOverride: 1
+  AoiPositionSource: {fileID: 0}
+  Flags: 2561
+  NetworkGuid:
+    RawGuidValue: a9df77f8488a4edb90152790326b2535
+  NestedObjects:
+  - {fileID: 144211364}
+  NetworkedBehaviours:
+  - {fileID: 248021407}
+  SimulationBehaviours: []
 --- !u!1 &343661782
 GameObject:
   m_ObjectHideFlags: 0

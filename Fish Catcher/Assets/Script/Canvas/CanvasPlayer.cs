@@ -5,13 +5,13 @@ using System;
 using Fusion;
 
 
-public class CanvasPlayer : MonoBehaviour
+public class CanvasPlayer : NetworkBehaviour
 {
+
     [SerializeField] private Timer _timerPrefab;
     [SerializeField] private Animator _animSelect;
     [SerializeField] private RectTransform _rectSelect;
     [SerializeField] private TMPro.TextMeshProUGUI _txtScore;
-    [SerializeField] private float _timer;
 
     private int _playerCount;
 
@@ -24,11 +24,15 @@ public class CanvasPlayer : MonoBehaviour
 
     public void Start()
     {
-        _timer = 30;
 
         OnUpdatePlayers += SetGameCount;
 
-        OnUpdateTime += _timerPrefab.UpdateTimer;
+        //OnUpdateTime += _timerPrefab.UpdateTimer;
+    }
+
+    public override void Spawned()
+    {
+        timer = 30;
     }
 
     public void SetPlayerInput(Player player)
@@ -43,6 +47,8 @@ public class CanvasPlayer : MonoBehaviour
 
     private bool _startGame;
     
+    [Networked]
+    public float timer { get; set; }
     void LateUpdate()
     {
         if (_playerCount >= 2 && !_startGame)
@@ -53,9 +59,19 @@ public class CanvasPlayer : MonoBehaviour
 
         if (_startGame)
         {
-            _timer -= Time.deltaTime;
-            OnUpdateTime(_timer);
+            //OnUpdateTime(_timer);
+            if(Object.HasStateAuthority)
+            {
+                RPC_SetTimer(timer);
+                timer -= Time.deltaTime;
+            }
         }
+    }
+
+    [Rpc(RpcSources.StateAuthority,RpcTargets.All)]
+    void RPC_SetTimer(float time, RpcInfo info = default)
+    {
+        _timerPrefab.UpdateTimer(time);
     }
 
     public void SetGameCount()

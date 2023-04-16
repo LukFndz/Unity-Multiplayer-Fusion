@@ -13,7 +13,9 @@ public class PlayerThrow : NetworkBehaviour
     private bool _isInMinigame;
 
     private bool _haveFish;
-    private int _score;
+
+    [Networked(OnChanged = nameof(ChangeScore))]
+    public int score { get; set; }
 
     public Animator AnimatorSelect { get => _animatorSelect; set => _animatorSelect = value; }
     public Animator AnimatorTabla { get => _animatorTabla; set => _animatorTabla = value; }
@@ -28,6 +30,7 @@ public class PlayerThrow : NetworkBehaviour
     private void Start()
     {
         FindObjectOfType<CanvasPlayer>().SetPlayerAnim(this);
+        score = 0;
     }
 
     #region STANDALONE
@@ -127,7 +130,7 @@ public class PlayerThrow : NetworkBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E) && _haveFish)
             {
-                _score++;
+                score++;
                 GetComponent<Player>().BlockInputs();
                 _animatorTabla.Play("BackTabla");
                 _haveFish = false;
@@ -135,9 +138,21 @@ public class PlayerThrow : NetworkBehaviour
         }
     }
 
-    public void SetScoreUI()
+    static void ChangeScore(Changed<PlayerThrow> changed)
     {
-        _txtScore.text = _score.ToString();
+        float nScore = changed.Behaviour.score;
+        changed.LoadOld();
+
+        if(changed.Behaviour.score < nScore)
+        {
+            changed.Behaviour.SetScoreUI(nScore);
+            Debug.Log("NEW: " + nScore);
+        }
+    }
+
+    public void SetScoreUI(float nScore)
+    {
+        _txtScore.text = score.ToString();
         _isFishing = false;
         _isInMinigame = false;
         _animatorCaña.gameObject.SetActive(true);
