@@ -20,7 +20,6 @@ public class CañaHandlerAnimation : MonoBehaviour
     {
         if(other.tag == "Limit")
         {
-            Debug.Log("ACA");
             _playerThrow.OnZone = true;
         }
         

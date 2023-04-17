@@ -9,8 +9,6 @@ public class WinnerTXT : MonoBehaviour
 
     private void Start()
     {
-        //FindObjectOfType<CanvasPlayer>().OnUpdateTime += UpdateTimer;
-
         _txtTimer = GetComponent<TMPro.TextMeshProUGUI>();
         GetComponentInParent<Image>().gameObject.SetActive(false);
     }
@@ -18,6 +16,6 @@ public class WinnerTXT : MonoBehaviour
 
     public void UpdateWinner(string nick)
     {
-        _txtTimer.text = "Winner is: " + nick;
+        _txtTimer.text = nick;
     }
 }

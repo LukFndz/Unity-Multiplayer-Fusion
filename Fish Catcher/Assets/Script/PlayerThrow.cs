@@ -85,6 +85,7 @@ public class PlayerThrow : NetworkBehaviour
             {
                 if (networkInputData.isFishPressed && !_isFishing && _onZone)
                 {
+                    GetComponent<Player>().BlockInputs();
                     _animatorSelect.speed = 1;
                     _animatorSelect.Play("Empty");
                     _animatorCaña.Play("Throw");

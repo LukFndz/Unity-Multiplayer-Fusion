@@ -28,13 +28,16 @@ public class CanvasPlayer : NetworkBehaviour
 
     public override void Spawned()
     {
-        timer = 90;
+        timer = 30;
     }
 
+
+    Player _player;
     public void SetPlayerInput(Player player)
     {
         OnUnlockInputs += player.UnlockInputs;
         OnEndTime += player.BlockInputs;
+        _player = player;
     }
 
     public void SetPlayerAnim(PlayerThrow player)
@@ -49,6 +52,9 @@ public class CanvasPlayer : NetworkBehaviour
     public float timer { get; set; }
     void LateUpdate()
     {
+        if (_endGame)
+            _player.BlockInputs();
+
         if (_playerCount >= 2 && !_startGame)
         {
             _startGame = true;
@@ -57,7 +63,6 @@ public class CanvasPlayer : NetworkBehaviour
 
         if (_startGame && !_endGame)
         {
-            //OnUpdateTime(_timer);
             if(Object.HasStateAuthority)
             {
                 RPC_SetTimer(timer);

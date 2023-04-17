@@ -37,7 +37,7 @@ public class Player : NetworkBehaviour
 
         if (_turnSpeed > 0)
         {
-            transform.localRotation = Quaternion.Euler(-data.rotationInput.y, data.rotationInput.x * _turnSpeed, 0);    
+            transform.localRotation = Quaternion.Euler(-data.rotationInput.y, data.rotationInput.x, 0);    
         }
     }
 

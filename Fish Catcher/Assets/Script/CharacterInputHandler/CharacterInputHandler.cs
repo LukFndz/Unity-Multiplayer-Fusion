@@ -11,6 +11,7 @@ public class CharacterInputHandler : NetworkBehaviour
     private Vector2 _rot;
     private bool _isFishing;
 
+
     NetworkInputData _data;
 
     void Start()
@@ -28,8 +29,8 @@ public class CharacterInputHandler : NetworkBehaviour
         if (!_player.HasInputAuthority) return;   
 
         _move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        _rot.x += Input.GetAxis("Mouse X");
-        _rot.y += Input.GetAxis("Mouse Y");
+        _rot.x += Input.GetAxis("Mouse X") * _player.TurnSpeed;
+        _rot.y += Input.GetAxis("Mouse Y") * _player.TurnSpeed;
 
         _rot.y = Mathf.Clamp(_rot.y, -20, 20);
 

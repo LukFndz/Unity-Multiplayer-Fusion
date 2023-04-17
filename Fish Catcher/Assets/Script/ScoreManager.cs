@@ -22,22 +22,26 @@ public class ScoreManager : NetworkBehaviour
     {
         if(Object.HasStateAuthority)
         {
+            if(score == actualWinnerScore)
+                RPC_SetWinner("Draw");
+
             if (score > actualWinnerScore)
             {
                 actualWinnerScore = score;
                 actualWinnerName = nick;
-                RPC_SetWinner(actualWinnerName);
+                RPC_SetWinner("Winner is " + actualWinnerName);
             }
+
+
+            Debug.Log("SCORE: " + score);
+            Debug.Log("ACTUAL WINNER: " + actualWinnerScore);
         }
-
-        Debug.Log(actualWinnerScore);
-
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     public void RPC_SetWinner(string nick, RpcInfo info = default)
     {
-        _txtWinner.UpdateWinner(actualWinnerName);
+        _txtWinner.UpdateWinner(nick);
     }
 
     public void ActiveWinnerCanvas()
