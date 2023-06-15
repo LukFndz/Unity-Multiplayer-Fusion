@@ -9,6 +9,6 @@ public class TablaHandler : MonoBehaviour
     {
         _playerThrow.SetScoreUI();
         _playerThrow.AnimatorTabla.gameObject.SetActive(false);
-        _playerThrow.GetComponent<Player>().UnlockInputs();
+        GetComponentInParent<CharacterMovementHandler>().blockInput = false;
     }
 }
