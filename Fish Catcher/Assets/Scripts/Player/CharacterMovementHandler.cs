@@ -8,7 +8,8 @@ public class CharacterMovementHandler : NetworkBehaviour
 {
 
     NetworkCharacterControllerCustom _myCharacterControllerCustom;
-
+    Camera _camera;
+    Canvas _canvas;
 
     public bool blockInput;
 
@@ -16,6 +17,8 @@ public class CharacterMovementHandler : NetworkBehaviour
     private void Awake()
     {
         _myCharacterControllerCustom = GetComponent<NetworkCharacterControllerCustom>();
+        _camera = GetComponentInChildren<Camera>();
+        _canvas = GetComponentInChildren<Canvas>();
     }
 
     public override void FixedUpdateNetwork()
@@ -32,6 +35,15 @@ public class CharacterMovementHandler : NetworkBehaviour
 
                 transform.localRotation = networkInputData.rotationInput;
             }
+        }
+    }
+
+    public void CheckCamera()
+    {
+        if (Object.HasInputAuthority)
+        {
+            _canvas.gameObject.SetActive(true);
+            _camera.gameObject.SetActive(true);
         }
     }
 }

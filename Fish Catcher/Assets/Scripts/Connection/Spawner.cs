@@ -7,17 +7,47 @@ using System;
 public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
 {
     [SerializeField] NetworkPlayer _playerPrefab;
+    [SerializeField] List<Transform> _spawnPoints;
 
     CharacterInputHandler _characterInputHandler;
 
-
-    //Callback que se recibe cuando entra un nuevo Cliente a la sala
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
         if (runner.IsServer)
         {
             Debug.Log("Player Joined, I'm the server/host");
-            runner.Spawn(_playerPrefab, null, null, player);
+
+            if (runner.SessionInfo.PlayerCount == 1)
+            {
+                runner.Spawn(_playerPrefab, GameObject.Find("SpawnPoint_1").transform.position, null, player);
+                foreach (var item in FindObjectsOfType<CharacterMovementHandler>())
+                {
+                    item.blockInput = true;
+                }
+            }
+
+            if (runner.SessionInfo.PlayerCount == 2)
+            {
+                runner.Spawn(_playerPrefab, GameObject.Find("SpawnPoint_2").transform.position, null, player);
+
+                foreach (var item in GameObject.FindGameObjectsWithTag("PlayerCanvas"))
+                {
+                    item.gameObject.SetActive(false);
+                }
+
+                foreach (var item in FindObjectsOfType<Camera>())
+                {
+                    item.gameObject.SetActive(false);
+                }
+
+                foreach (var item in FindObjectsOfType<CharacterMovementHandler>())
+                {
+                    item.CheckCamera();
+                    item.blockInput = false;
+                }
+            }
+
+
         }
         else
         {

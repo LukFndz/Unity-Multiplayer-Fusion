@@ -9,16 +9,14 @@ public class FishHandler : NetworkBehaviour
     [SerializeField] private Animator _animatorSelect;
     [SerializeField] private RectTransform _selectTransform;
     [SerializeField] private Animator _animatorTabla;
-    [SerializeField] private TMPro.TextMeshProUGUI _txtScore;
-
-
-    public float score;
-
+    public TMPro.TextMeshProUGUI txtScore;
 
     //[Networked(OnChanged = nameof(OnFishingChange))]
     bool IsFishing { get; set; }
 
-    //[Networked(OnChanged = nameof(OnHaveFishChange))]
+    [Networked(OnChanged = nameof(OnScoreChanged))]
+    float Score { get; set; }
+
     bool HaveFish { get; set; }
 
     public override void FixedUpdateNetwork()
@@ -75,10 +73,10 @@ public class FishHandler : NetworkBehaviour
 
     //}
 
-    //static void OnHaveFishChange(Changed<FishHandler> changed)
-    //{
-
-    //}
+    static void OnScoreChanged(Changed<FishHandler> changed)
+    {
+        changed.Behaviour.txtScore.text = changed.Behaviour.Score.ToString();
+    }
 
     public IEnumerator WaitUnlock()
     {
@@ -96,8 +94,7 @@ public class FishHandler : NetworkBehaviour
         {
             if (networkInputData.isInteractPressed && HaveFish)
             {
-                score++;
-                _txtScore.text = score.ToString();
+                Score++;
                 GetComponent<CharacterMovementHandler>().blockInput = true;
                 _animatorTabla.Play("BackTabla");
                 HaveFish = false;

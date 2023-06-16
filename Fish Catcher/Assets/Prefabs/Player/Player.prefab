@@ -687,8 +687,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78bfd83fbdf093441bf46e17c9afdb46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 2790645989306727987}
-  _playerThrow: {fileID: 2790645989306727985}
+  _player: {fileID: 0}
+  _playerThrow: {fileID: 0}
 --- !u!1 &2790645988350753496
 GameObject:
   m_ObjectHideFlags: 0
@@ -703,7 +703,7 @@ GameObject:
   - component: {fileID: 2790645988350753502}
   m_Layer: 5
   m_Name: _CANVAS Player
-  m_TagString: Untagged
+  m_TagString: PlayerCanvas
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1462,7 +1462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73c1e5edc6738184a89529d18d61dcd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerThrow: {fileID: 2790645989306727985}
+  _playerThrow: {fileID: 0}
 --- !u!1 &2790645989169841178
 GameObject:
   m_ObjectHideFlags: 0
@@ -1861,7 +1861,7 @@ MonoBehaviour:
   _animatorSelect: {fileID: 2790645988437592605}
   _selectTransform: {fileID: 2790645987735068146}
   _animatorTabla: {fileID: 2790645989141902347}
-  _txtScore: {fileID: 2790645988313239346}
+  txtScore: {fileID: 2790645988313239346}
 --- !u!1 &2790645989430073446
 GameObject:
   m_ObjectHideFlags: 0
