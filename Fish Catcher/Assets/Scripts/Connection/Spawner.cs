@@ -20,38 +20,40 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
             if (runner.SessionInfo.PlayerCount == 1)
             {
                 runner.Spawn(_playerPrefab, GameObject.Find("SpawnPoint_1").transform.position, null, player);
-                foreach (var item in FindObjectsOfType<CharacterMovementHandler>())
-                {
-                    item.blockInput = true;
-                }
             }
 
             if (runner.SessionInfo.PlayerCount == 2)
             {
                 runner.Spawn(_playerPrefab, GameObject.Find("SpawnPoint_2").transform.position, null, player);
 
-                foreach (var item in GameObject.FindGameObjectsWithTag("PlayerCanvas"))
-                {
-                    item.gameObject.SetActive(false);
-                }
-
-                foreach (var item in FindObjectsOfType<Camera>())
-                {
-                    item.gameObject.SetActive(false);
-                }
-
-                foreach (var item in FindObjectsOfType<CharacterMovementHandler>())
-                {
-                    item.CheckCamera();
-                    item.blockInput = false;
-                }
+                CheckPlayer();
             }
-
-
         }
         else
         {
             Debug.Log("Player Joined, I'm not the server/host");
+
+            CheckPlayer();
+
+        }
+    }
+
+    public void CheckPlayer()
+    {
+        foreach (var item in GameObject.FindGameObjectsWithTag("PlayerCanvas"))
+        {
+            item.gameObject.SetActive(false);
+        }
+
+        foreach (var item in FindObjectsOfType<Camera>())
+        {
+            item.gameObject.SetActive(false);
+        }
+
+        foreach (var item in FindObjectsOfType<CharacterMovementHandler>())
+        {
+            item.CheckCamera();
+            item.blockInput = false;
         }
     }
 

@@ -10,8 +10,9 @@ public class CharacterMovementHandler : NetworkBehaviour
     NetworkCharacterControllerCustom _myCharacterControllerCustom;
     Camera _camera;
     Canvas _canvas;
-
     public bool blockInput;
+    public TMPro.TextMeshProUGUI timerUI;
+    private float timer;
 
 
     private void Awake()
@@ -19,6 +20,9 @@ public class CharacterMovementHandler : NetworkBehaviour
         _myCharacterControllerCustom = GetComponent<NetworkCharacterControllerCustom>();
         _camera = GetComponentInChildren<Camera>();
         _canvas = GetComponentInChildren<Canvas>();
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        timer = 30;
     }
 
     public override void FixedUpdateNetwork()
@@ -40,10 +44,28 @@ public class CharacterMovementHandler : NetworkBehaviour
 
     public void CheckCamera()
     {
-        if (Object.HasInputAuthority)
+        if (!Object.HasInputAuthority)
+            return;
+
+        StartCoroutine(CO_StartTime());
+        _canvas.gameObject.SetActive(true);
+        _camera.gameObject.SetActive(true);
+
+    }
+
+    IEnumerator CO_StartTime()
+    {
+        while (timer > 0)
         {
-            _canvas.gameObject.SetActive(true);
-            _camera.gameObject.SetActive(true);
+            yield return new WaitForEndOfFrame();
+            timer -= Time.deltaTime;
+            timerUI.text = timer.ToString("N0");
         }
+
+        foreach (var item in FindObjectsOfType<CharacterMovementHandler>())
+        {
+            item.blockInput = true;
+        }
+
     }
 }

@@ -18,6 +18,10 @@ public class FishHandler : NetworkBehaviour
     float Score { get; set; }
 
     bool HaveFish { get; set; }
+    public Animator AnimatorCaña { get => _animatorCaña; set => _animatorCaña = value; }
+    public Animator AnimatorSelect { get => _animatorSelect; set => _animatorSelect = value; }
+    public RectTransform SelectTransform { get => _selectTransform; set => _selectTransform = value; }
+    public Animator AnimatorTabla { get => _animatorTabla; set => _animatorTabla = value; }
 
     public override void FixedUpdateNetwork()
     {

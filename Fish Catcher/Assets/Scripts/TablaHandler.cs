@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class TablaHandler : MonoBehaviour
 {
-    [SerializeField] private PlayerThrow _playerThrow;
+    [SerializeField] private FishHandler _playerThrow;
     public void PutFish()
     {
-        _playerThrow.SetScoreUI();
         _playerThrow.AnimatorTabla.gameObject.SetActive(false);
         GetComponentInParent<CharacterMovementHandler>().blockInput = false;
     }
