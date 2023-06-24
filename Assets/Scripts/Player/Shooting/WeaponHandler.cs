@@ -53,7 +53,9 @@ public class WeaponHandler : NetworkBehaviour
         if (BulletAmount == 1)
         {
             StartCoroutine(COR_Fire());
-            Runner.Spawn(_bulletPrefab, _firingTransform.position,transform.rotation).SetSpeedAndOwner(BulletSpeed, transform.root.gameObject);
+            var ob = Runner.Spawn(_bulletPrefab, _firingTransform.position, transform.rotation);
+            ob.SetSpeedAndOwner(BulletSpeed, transform.root.gameObject);
+
         } else
         {
             StartCoroutine(COR_Triple());
