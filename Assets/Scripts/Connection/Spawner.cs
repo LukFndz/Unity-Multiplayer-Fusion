@@ -7,6 +7,8 @@ using System;
 public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
 {
     [SerializeField] NetworkPlayer _playerPrefab;
+    [SerializeField] ItemUpgradeWeapon _itemPrefab;
+
 
     CharacterInputHandler _characterInputHandler;
 
@@ -17,12 +19,18 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
         {
             Debug.Log("Player Joined, I'm the server/host");
             runner.Spawn(_playerPrefab, null, null, player);
+            if (runner.SessionInfo.PlayerCount == 2)
+            {
+                FindObjectOfType<SpawnerItem>().SpawnItems();
+            }
         }
         else
         {
             Debug.Log("Player Joined, I'm not the server/host");
         }
     }
+
+
 
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {

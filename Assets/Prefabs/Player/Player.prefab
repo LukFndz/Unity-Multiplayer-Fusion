@@ -178,7 +178,7 @@ MonoBehaviour:
   jumpImpulse: 12
   acceleration: 10
   braking: 10
-  maxSpeed: 2
+  maxSpeed: 4
   rotationSpeed: 15
   _IsGrounded: 0
   _Velocity: {x: 0, y: 0, z: 0}
@@ -211,6 +211,7 @@ MonoBehaviour:
   _bulletPrefab: {fileID: 2065043278916362372, guid: 1159435a81b99304dbb8e86058a3952b, type: 3}
   _firingTransform: {fileID: 2451897091483024323}
   _shootParticle: {fileID: 8042582932719953822}
+  BulletSpeed: 2
 --- !u!114 &1929930664420400825
 MonoBehaviour:
   m_ObjectHideFlags: 0

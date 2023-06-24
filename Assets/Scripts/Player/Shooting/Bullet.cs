@@ -7,17 +7,33 @@ public class Bullet : NetworkBehaviour
 {
     [SerializeField] NetworkRigidbody _myNetRgbd;
 
+
+    [Networked(OnChanged = nameof(OnSpeedChange))]
+    float Speed { get; set; }
     TickTimer _expireTickTimer = TickTimer.None;
+
+
 
     private void Start()
     {
-        _myNetRgbd.Rigidbody.AddForce(transform.forward * 10, ForceMode.VelocityChange);
+        _myNetRgbd.Rigidbody.AddForce(transform.forward * Speed, ForceMode.VelocityChange);
 
         if (Object.HasStateAuthority)
         {
             _expireTickTimer = TickTimer.CreateFromSeconds(Runner, 2);
         }        
     }
+
+    public void ChangeSpeed(float speed)
+    {
+        Speed = speed;
+    }
+
+    static void OnSpeedChange(Changed<Bullet> changed)
+    {
+        Debug.Log("CambioVel");
+    }
+
 
     public override void FixedUpdateNetwork()
     {

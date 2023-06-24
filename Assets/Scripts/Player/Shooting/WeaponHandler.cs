@@ -8,6 +8,7 @@ public class WeaponHandler : NetworkBehaviour
     [SerializeField] Bullet _bulletPrefab;
     [SerializeField] Transform _firingTransform;
     [SerializeField] ParticleSystem _shootParticle;
+    public float BulletSpeed;
 
     [Networked(OnChanged = nameof(OnFiringChange))]
     bool IsFiring { get; set; }
@@ -42,24 +43,13 @@ public class WeaponHandler : NetworkBehaviour
 
         StartCoroutine(COR_Fire());
 
-        Runner.Spawn(_bulletPrefab, _firingTransform.position, transform.rotation);
+        Runner.Spawn(_bulletPrefab, _firingTransform.position, transform.rotation).ChangeSpeed(BulletSpeed);
 
-        //No -> Physics.Raycast
-        /*
-        Runner.LagCompensation.Raycast(origin: _firingTransform.position, 
-                                       direction: _firingTransform.forward, 
-                                       length: 100, 
-                                       player: Object.InputAuthority,
-                                       hit: out var hitInfo);
+    }
 
-        if (hitInfo.Hitbox != null)
-        {
-            if (Object.HasStateAuthority)
-            {
-                hitInfo.Hitbox.transform.root.GetComponent<LifeHandler>()?.TakeDamage(25);
-            }
-        }
-        */
+    public void ChangeBulletSpeed(float speed)
+    {
+        BulletSpeed += speed;
     }
 
     IEnumerator COR_Fire()

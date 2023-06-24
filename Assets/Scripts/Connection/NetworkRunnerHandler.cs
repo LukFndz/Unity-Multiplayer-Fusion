@@ -75,7 +75,8 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
             Scene = scene,
             SessionName = sessionName,
             CustomLobbyName = "Normal Lobby",
-            SceneManager = sceneManager
+            SceneManager = sceneManager,
+            PlayerCount = 2
         });
 
         if (!result.Ok)
