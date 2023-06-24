@@ -18,9 +18,13 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
         if (runner.IsServer)
         {
             Debug.Log("Player Joined, I'm the server/host");
-            runner.Spawn(_playerPrefab, null, null, player);
+            if (runner.SessionInfo.PlayerCount == 1)
+            {
+                runner.Spawn(_playerPrefab, GameObject.Find("SpawnPoint_1").transform.position, null, player);
+            }
             if (runner.SessionInfo.PlayerCount == 2)
             {
+                runner.Spawn(_playerPrefab, GameObject.Find("SpawnPoint_2").transform.position, null, player);
                 FindObjectOfType<SpawnerItem>().SpawnItems();
             }
         }
@@ -29,7 +33,6 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
             Debug.Log("Player Joined, I'm not the server/host");
         }
     }
-
 
 
     public void OnInput(NetworkRunner runner, NetworkInput input)

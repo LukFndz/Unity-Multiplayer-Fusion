@@ -17,5 +17,22 @@ public class SpawnerItem : NetworkBehaviour
         Runner.Spawn(prefab, _spawnPoints[2].position, null);
         Runner.Spawn(prefab, _spawnPoints[3].position, null);
         Runner.Spawn(prefabTriple, _spawnPoints[4].position, null);
+        RPC_StartGame();
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    void RPC_StartGame()
+    {
+        StartCoroutine(CO_StartGame());
+        Debug.Log("ACA");
+    }
+
+    IEnumerator CO_StartGame()
+    {
+        yield return new WaitForSeconds(0);
+        foreach (var item in FindObjectsOfType<CharacterMovementHandler>())
+        {
+            item.blockInput = false;
+        }
     }
 }

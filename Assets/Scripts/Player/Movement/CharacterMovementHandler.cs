@@ -11,9 +11,11 @@ public class CharacterMovementHandler : NetworkBehaviour
     NetworkMecanimAnimator _myCharacterAnimator;
 
     float _movementValue;
+    public bool blockInput;
 
     private void Awake()
     {
+        blockInput = true;
         _myCharacterController = GetComponent<NetworkCharacterControllerCustom>();
 
         if (TryGetComponent(out LifeHandler myLifeHandler))
@@ -31,32 +33,27 @@ public class CharacterMovementHandler : NetworkBehaviour
 
         if (GetInput(out NetworkInputData networkInputData))
         {
+
             //MOVIMIENTO
-
-            Vector3 moveDirection = Vector3.forward * networkInputData.movementInput;
-
-            _myCharacterController.Move(moveDirection);
-
-            //SALTO
-
-            if (networkInputData.isJumpPressed)
+            if (!blockInput)
             {
-                _myCharacterController.Jump();
+                Vector3 moveDirection = Vector3.forward * networkInputData.movementInput;
+
+                _myCharacterController.Move(moveDirection);
+
+                //SALTO
+
+                if (networkInputData.isJumpPressed)
+                {
+                    _myCharacterController.Jump();
+                }
             }
+                //ANIMATOR
 
-            //ANIMATOR
-
-            _movementValue = Mathf.Abs(_myCharacterController.Velocity.x);
+                _movementValue = Mathf.Abs(_myCharacterController.Velocity.x);
 
 
-            //_movementValue = new Vector2(_myCharacterController.Velocity.x, _myCharacterController.Velocity.z).sqrMagnitude;
-
-            //if (_movementValue > 1)
-            //{
-            //    _movementValue = 1;
-            //}
-
-            _myCharacterAnimator.Animator.SetFloat("MovementValue", _movementValue);
+                _myCharacterAnimator.Animator.SetFloat("MovementValue", _movementValue);
         }
     }
 
@@ -64,6 +61,7 @@ public class CharacterMovementHandler : NetworkBehaviour
     {
         //Aquel que quiera agregar un Respawn con posiciones 'random' puede aplicar ese vector3 como parametro
         _myCharacterController.TeleportToPosition(transform.position);
+        blockInput = false;
     }
 
     void SetControllerEnabled(bool isEnabled)
