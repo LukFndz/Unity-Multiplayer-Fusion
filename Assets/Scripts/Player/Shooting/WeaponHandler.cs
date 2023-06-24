@@ -7,8 +7,11 @@ public class WeaponHandler : NetworkBehaviour
 {
     [SerializeField] Bullet _bulletPrefab;
     [SerializeField] Transform _firingTransform;
+
     [SerializeField] ParticleSystem _shootParticle;
     public float BulletSpeed;
+    public float BulletAmount = 1;
+
 
     [Networked(OnChanged = nameof(OnFiringChange))]
     bool IsFiring { get; set; }
@@ -35,15 +38,41 @@ public class WeaponHandler : NetworkBehaviour
         }
     }
 
+    public void ChangeBulletAmount(int amount)
+    {
+        BulletAmount = amount;
+    }
+
     void Fire()
     {
-        if (Time.time - _lastFireTime < 0.15f) return;
+        if (Time.time - _lastFireTime < 0.5f) return;
 
         _lastFireTime = Time.time;
 
-        StartCoroutine(COR_Fire());
 
-        Runner.Spawn(_bulletPrefab, _firingTransform.position, transform.rotation).ChangeSpeed(BulletSpeed);
+        if (BulletAmount == 1)
+        {
+            StartCoroutine(COR_Fire());
+            Runner.Spawn(_bulletPrefab, _firingTransform.position,transform.rotation).SetSpeedAndOwner(BulletSpeed, transform.root.gameObject);
+        } else
+        {
+            StartCoroutine(COR_Triple());
+        }
+
+
+    }
+    IEnumerator COR_Triple()
+    {
+
+        Runner.Spawn(_bulletPrefab, _firingTransform.position, transform.rotation).SetSpeedAndOwner(BulletSpeed, transform.root.gameObject);
+
+        yield return new WaitForSeconds(0.15f);
+
+        Runner.Spawn(_bulletPrefab, _firingTransform.position, transform.rotation).SetSpeedAndOwner(BulletSpeed, transform.root.gameObject);
+
+        yield return new WaitForSeconds(0.15f);
+
+        Runner.Spawn(_bulletPrefab, _firingTransform.position, transform.rotation).SetSpeedAndOwner(BulletSpeed, transform.root.gameObject);
 
     }
 
@@ -56,7 +85,7 @@ public class WeaponHandler : NetworkBehaviour
     {
         IsFiring = true;
 
-        yield return new WaitForSeconds(0.15f);
+        yield return new WaitForSeconds(0.5f);
 
         IsFiring = false;
     }

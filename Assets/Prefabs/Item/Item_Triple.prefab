@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 4976136353444824174}
   - component: {fileID: 4718244593131907523}
   - component: {fileID: 4249219631343431288}
-  - component: {fileID: 6857755645955999930}
   - component: {fileID: 7617361141825755769}
   - component: {fileID: 1939237056551497963}
   - component: {fileID: 5226407128783505004}
+  - component: {fileID: 341391458079816961}
   m_Layer: 0
-  m_Name: Item
+  m_Name: Item_Triple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -66,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 327419eeb8ae3ca4ca9ef3739afea1c8, type: 2}
+  - {fileID: 2100000, guid: 2e92f43213efdf8488eb5ced3aabcb48, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -101,19 +101,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6857755645955999930
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2095959847224970783}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b90e4e2114c4a5440aff93911a2d4357, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
 --- !u!114 &7617361141825755769
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,11 +120,11 @@ MonoBehaviour:
   AoiPositionSource: {fileID: 0}
   Flags: 2305
   NetworkGuid:
-    RawGuidValue: ace848de9cfdf104fad3aa234e016384
+    RawGuidValue: 1c2becdb5c979b04b8ce77452babd29d
   NestedObjects: []
   NetworkedBehaviours:
-  - {fileID: 6857755645955999930}
   - {fileID: 5226407128783505004}
+  - {fileID: 341391458079816961}
   SimulationBehaviours: []
 --- !u!54 &1939237056551497963
 Rigidbody:
@@ -183,3 +170,16 @@ MonoBehaviour:
     RotTeleportRadians: 1.5
   UseLegacySharedModeInterpolation: 0
   TargetInterpolationDelay: 0.03
+--- !u!114 &341391458079816961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2095959847224970783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aeb2713e75cfae145afa1d60f20e7e64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0

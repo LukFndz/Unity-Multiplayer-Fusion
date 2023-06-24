@@ -2,14 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
-public class ItemUpgradeWeapon : NetworkBehaviour
+
+public class ItemUpgradeTripleShoot : NetworkBehaviour
 {
+
     TickTimer _expireTickTimer = TickTimer.None;
     private void Start()
     {
         if (Object.HasStateAuthority)
         {
-            _expireTickTimer = TickTimer.CreateFromSeconds(Runner, 240);
+            _expireTickTimer = TickTimer.CreateFromSeconds(Runner, 60);
         }
     }
     void DespawnObject()
@@ -25,11 +27,10 @@ public class ItemUpgradeWeapon : NetworkBehaviour
         {
             if (other.TryGetComponent(out WeaponHandler enemy))
             {
-                enemy.ChangeBulletSpeed(7);
+                enemy.ChangeBulletAmount(3);
             }
 
             DespawnObject();
         }
     }
-
 }

@@ -6,7 +6,7 @@ using Fusion;
 public class Bullet : NetworkBehaviour
 {
     [SerializeField] NetworkRigidbody _myNetRgbd;
-
+    GameObject _owner;
 
     [Networked(OnChanged = nameof(OnSpeedChange))]
     float Speed { get; set; }
@@ -16,7 +16,7 @@ public class Bullet : NetworkBehaviour
 
     private void Start()
     {
-        _myNetRgbd.Rigidbody.AddForce(transform.forward * Speed, ForceMode.VelocityChange);
+        _myNetRgbd.Rigidbody.AddForce(transform.forward * Speed, ForceMode.Impulse);
 
         if (Object.HasStateAuthority)
         {
@@ -24,9 +24,10 @@ public class Bullet : NetworkBehaviour
         }        
     }
 
-    public void ChangeSpeed(float speed)
+    public void SetSpeedAndOwner(float speed, GameObject owner)
     {
         Speed = speed;
+        _owner = owner;
     }
 
     static void OnSpeedChange(Changed<Bullet> changed)
@@ -55,7 +56,7 @@ public class Bullet : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (Object && Object.HasStateAuthority)
+        if (Object && Object.HasStateAuthority && other.gameObject != _owner)
         {
             if (other.TryGetComponent(out LifeHandler enemy))
             {
