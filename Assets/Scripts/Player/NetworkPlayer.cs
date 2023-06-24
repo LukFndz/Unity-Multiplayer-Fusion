@@ -11,7 +11,7 @@ public class NetworkPlayer : NetworkBehaviour
     NicknameText _myNickname;
 
     [Networked(OnChanged = nameof(OnNicknameChanged))]
-    NetworkString<_16> Nickname { get; set; }
+    public NetworkString<_16> Nickname { get; set; }
 
     public event Action OnLeft = delegate { };
 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
+using UnityEngine.UI;
 
 public class LifeHandler : NetworkBehaviour
 {
@@ -41,12 +42,11 @@ public class LifeHandler : NetworkBehaviour
         {
             if (_currentDeads >= 1)
             {
-                //Si no tenemos autoridad de input (Evitamos desconectar al Host)
-                if (!Object.HasInputAuthority)
-                    //Desconectamos del servidor al jugador
-                    Runner.Disconnect(Object.InputAuthority);
 
-                //Desconectamos de la red al objeto del jugador
+                if (!Object.HasInputAuthority)
+                {
+                    Runner.Disconnect(Object.InputAuthority);
+                }
                 Runner.Despawn(Object);
             }
             else

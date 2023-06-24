@@ -24,7 +24,6 @@ public class SpawnerItem : NetworkBehaviour
     void RPC_StartGame()
     {
         StartCoroutine(CO_StartGame());
-        Debug.Log("ACA");
     }
 
     IEnumerator CO_StartGame()
