@@ -18,13 +18,13 @@ public class CharacterInputHandler : MonoBehaviour
     {
         //Tomo todos los Inputs
 
-        _horizontalMovement = Input.GetAxis("Horizontal");
+        _horizontalMovement = Input.GetAxisRaw("Horizontal");
 
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
         {
             _isJumpPressed = true;
         }
-        else if (Input.GetKeyDown(KeyCode.Space))
+        else if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
             _isFirePressed = true;
         }

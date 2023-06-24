@@ -9,7 +9,7 @@ public class ItemUpgradeWeapon : NetworkBehaviour
     {
         if (Object.HasStateAuthority)
         {
-            _expireTickTimer = TickTimer.CreateFromSeconds(Runner, 240);
+            _expireTickTimer = TickTimer.CreateFromSeconds(Runner, 10000);
         }
     }
     void DespawnObject()
@@ -25,7 +25,7 @@ public class ItemUpgradeWeapon : NetworkBehaviour
         {
             if (other.TryGetComponent(out WeaponHandler enemy))
             {
-                enemy.ChangeBulletSpeed(7);
+                enemy.ChangeBulletSpeed(15);
             }
 
             DespawnObject();
