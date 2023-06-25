@@ -30,6 +30,7 @@ public class LifeHandler : NetworkBehaviour
         _isDead = false;
     }
 
+
     public void TakeDamage(byte dmg)
     {
         if (_isDead) return;
@@ -44,7 +45,7 @@ public class LifeHandler : NetworkBehaviour
             {
                 if (!Object.HasInputAuthority)
                 {
-                    Runner.Disconnect(Object.InputAuthority);
+                    //Runner.Disconnect(Object.InputAuthority);
                 }
                 Runner.Despawn(Object);
             }
@@ -95,7 +96,6 @@ public class LifeHandler : NetworkBehaviour
             changed.Behaviour.Revive();
         }
     }
-
     void Death()
     {
         _playerVisual.SetActive(false);

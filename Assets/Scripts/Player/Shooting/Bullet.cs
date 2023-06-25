@@ -30,9 +30,6 @@ public class Bullet : NetworkBehaviour
         _owner = owner;
     }
 
-
-
-
     public override void FixedUpdateNetwork()
     {
         if (Object.HasStateAuthority)
