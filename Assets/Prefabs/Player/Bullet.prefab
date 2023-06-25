@@ -186,8 +186,8 @@ MonoBehaviour:
   m_Script: {fileID: 1710889294, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
-  InterpolationSpace: 0
+  _interpolationDataSource: 2
+  InterpolationSpace: 1
   InterpolationTarget: {fileID: 2065043278596155031}
   InterpolateErrorCorrection: 1
   InterpolatedErrorCorrectionSettings:
@@ -214,5 +214,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de04d96091cb4d9428238376037e8e2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
+  _interpolationDataSource: 2
   _myNetRgbd: {fileID: 2065043278916362373}

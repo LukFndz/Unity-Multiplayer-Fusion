@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
 
+
 public class WeaponHandler : NetworkBehaviour
 {
     [SerializeField] Bullet _bulletPrefab;
@@ -55,12 +56,14 @@ public class WeaponHandler : NetworkBehaviour
 
             var key = new NetworkObjectPredictionKey()
             {
-                Byte0 = (byte)Runner.Tick, // Low number part is enough
+                Byte0 = (byte)Runner.Tick,
                 Byte1 = (byte)Object.InputAuthority.RawEncoded,
             };
             StartCoroutine(COR_Fire());
-            var projectile = Runner.Spawn(_bulletPrefab, _firingTransform.position, transform.rotation, Object.InputAuthority, predictionKey: key);
-            projectile.SetSpeedAndOwner(BulletSpeed, transform.root.gameObject);
+            var projectile = Runner.Spawn(_bulletPrefab, _firingTransform.position, transform.rotation, Object.InputAuthority, (runner, o) => { 
+            
+                o.GetComponent<Bullet>().SetSpeedAndOwner(BulletSpeed, transform.root.gameObject);
+            });
         } else
         {
             StartCoroutine(COR_Triple());
@@ -71,15 +74,24 @@ public class WeaponHandler : NetworkBehaviour
     IEnumerator COR_Triple()
     {
 
-        Runner.Spawn(_bulletPrefab, _firingTransform.position, transform.rotation).SetSpeedAndOwner(BulletSpeed, transform.root.gameObject);
+        var projectile = Runner.Spawn(_bulletPrefab, _firingTransform.position, transform.rotation, Object.InputAuthority, (runner, o) => {
+
+            o.GetComponent<Bullet>().SetSpeedAndOwner(BulletSpeed, transform.root.gameObject);
+        });
 
         yield return new WaitForSeconds(0.15f);
 
-        Runner.Spawn(_bulletPrefab, _firingTransform.position, transform.rotation).SetSpeedAndOwner(BulletSpeed, transform.root.gameObject);
+        var projectile_2 = Runner.Spawn(_bulletPrefab, _firingTransform.position, transform.rotation, Object.InputAuthority, (runner, o) => {
+
+            o.GetComponent<Bullet>().SetSpeedAndOwner(BulletSpeed, transform.root.gameObject);
+        });
 
         yield return new WaitForSeconds(0.15f);
 
-        Runner.Spawn(_bulletPrefab, _firingTransform.position, transform.rotation).SetSpeedAndOwner(BulletSpeed, transform.root.gameObject);
+        var projectile_3 = Runner.Spawn(_bulletPrefab, _firingTransform.position, transform.rotation, Object.InputAuthority, (runner, o) => {
+
+            o.GetComponent<Bullet>().SetSpeedAndOwner(BulletSpeed, transform.root.gameObject);
+        });
 
     }
 

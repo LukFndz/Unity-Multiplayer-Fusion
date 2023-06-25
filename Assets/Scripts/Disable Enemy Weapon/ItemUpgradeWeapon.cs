@@ -25,7 +25,7 @@ public class ItemUpgradeWeapon : NetworkBehaviour
         {
             if (other.TryGetComponent(out WeaponHandler enemy))
             {
-                enemy.ChangeBulletSpeed(15);
+                enemy.ChangeBulletSpeed(5);
             }
 
             DespawnObject();

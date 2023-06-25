@@ -42,7 +42,6 @@ public class LifeHandler : NetworkBehaviour
         {
             if (_currentDeads >= 1)
             {
-
                 if (!Object.HasInputAuthority)
                 {
                     Runner.Disconnect(Object.InputAuthority);
