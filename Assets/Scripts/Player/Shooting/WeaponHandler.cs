@@ -42,7 +42,7 @@ public class WeaponHandler : NetworkBehaviour
     {
         BulletAmount = amount;
     }
-
+    
     void Fire()
     {
         if (Time.time - _lastFireTime < 0.5f) return;
@@ -52,17 +52,21 @@ public class WeaponHandler : NetworkBehaviour
 
         if (BulletAmount == 1)
         {
-            StartCoroutine(COR_Fire());
-            var ob = Runner.Spawn(_bulletPrefab, _firingTransform.position, transform.rotation);
-            ob.SetSpeedAndOwner(BulletSpeed, transform.root.gameObject);
 
+            var key = new NetworkObjectPredictionKey()
+            {
+                Byte0 = (byte)Runner.Tick, // Low number part is enough
+                Byte1 = (byte)Object.InputAuthority.RawEncoded,
+            };
+            StartCoroutine(COR_Fire());
+            var projectile = Runner.Spawn(_bulletPrefab, _firingTransform.position, transform.rotation, Object.InputAuthority, predictionKey: key);
+            projectile.SetSpeedAndOwner(BulletSpeed, transform.root.gameObject);
         } else
         {
             StartCoroutine(COR_Triple());
         }
-
-
     }
+
 
     IEnumerator COR_Triple()
     {

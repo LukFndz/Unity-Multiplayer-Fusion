@@ -8,7 +8,7 @@ public class Bullet : NetworkBehaviour
     [SerializeField] NetworkRigidbody _myNetRgbd;
     GameObject _owner;
 
-    [Networked(OnChanged = nameof(OnSpeedChange))]
+
     float Speed { get; set; }
     TickTimer _expireTickTimer = TickTimer.None;
 
@@ -30,10 +30,7 @@ public class Bullet : NetworkBehaviour
         _owner = owner;
     }
 
-    static void OnSpeedChange(Changed<Bullet> changed)
-    {
-        Debug.Log("CambioVel");
-    }
+
 
 
     public override void FixedUpdateNetwork()
