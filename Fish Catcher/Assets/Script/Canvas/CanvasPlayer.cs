@@ -18,7 +18,7 @@ public class CanvasPlayer : NetworkBehaviour
 
     public event Action OnEndTime = delegate { };
 
-    public event Action OnUnlockInputs = delegate { };
+    public event Action OnStartGame = delegate { };
 
 
     public void Start()
@@ -35,7 +35,9 @@ public class CanvasPlayer : NetworkBehaviour
     Player _player;
     public void SetPlayerInput(Player player)
     {
-        OnUnlockInputs += player.UnlockInputs;
+        OnStartGame += player.SendToSpawnPoint;
+        OnStartGame += player.BlockInputs;
+        OnStartGame += StartTimer;
         OnEndTime += player.BlockInputs;
         _player = player;
     }
@@ -46,8 +48,19 @@ public class CanvasPlayer : NetworkBehaviour
     }
 
     private bool _startGame;
+    private bool _starTimer;
     private bool _endGame;
     
+    public void StartTimer()
+    {
+        StartCoroutine(StartTimerRun());
+    }
+    IEnumerator StartTimerRun()
+    {
+        yield return new WaitForSeconds(3);
+        _starTimer = true;
+    }
+
     [Networked]
     public float timer { get; set; }
     void LateUpdate()
@@ -57,11 +70,13 @@ public class CanvasPlayer : NetworkBehaviour
 
         if (_playerCount >= 2 && !_startGame)
         {
+            timer = 30;
+            _timerPrefab.UpdateTimer(30);
             _startGame = true;
-            OnUnlockInputs();
+            OnStartGame();
         }
 
-        if (_startGame && !_endGame)
+        if (_startGame && !_endGame && _starTimer)
         {
             if(Object.HasStateAuthority)
             {

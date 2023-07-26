@@ -8,6 +8,7 @@ public class Player : NetworkBehaviour
     [SerializeField] private float _turnSpeed;
     [SerializeField] private NetworkRigidbody _rbNet;
 
+    Vector3 _spawnPoint;
     public float TurnSpeed { get => _turnSpeed; set => _turnSpeed = value; }
     public float Speed { get => _speed; set => _speed = value; }
 
@@ -18,26 +19,30 @@ public class Player : NetworkBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         _rbNet = GetComponent<NetworkRigidbody>();
-        BlockInputs();
+        //BlockInputs();
     }
 
     public override void Spawned()
     {
+        _spawnPoint = transform.position;
         FindObjectOfType<CanvasPlayer>().SetGameCount();
         FindObjectOfType<CanvasPlayer>().SetPlayerInput(this);
     }
 
     public void Movement(NetworkInputData data)
     {
-        Vector3 direction = _rbNet.Rigidbody.rotation * data.movementInput;
-        if (data.movementInput.magnitude > 0.01)
+        if (data.movementInput != null)
         {
-            _rbNet.Rigidbody.MovePosition(_rbNet.Rigidbody.position + direction * Time.fixedDeltaTime * _speed);
-        }
+            Vector3 direction = _rbNet.Rigidbody.rotation * data.movementInput;
+            if (data.movementInput.magnitude > 0.01)
+            {
+                _rbNet.Rigidbody.MovePosition(_rbNet.Rigidbody.position + direction * Time.fixedDeltaTime * _speed);
+            }
 
-        if (_turnSpeed > 0)
-        {
-            transform.localRotation = Quaternion.Euler(-data.rotationInput.y, data.rotationInput.x, 0);    
+            if (_turnSpeed > 0)
+            {
+                transform.localRotation = Quaternion.Euler(-data.rotationInput.y, data.rotationInput.x, 0);
+            }
         }
     }
 
@@ -60,5 +65,17 @@ public class Player : NetworkBehaviour
         GetComponent<PlayerThrow>().UnlockFish();
         _speed = 5;
         _turnSpeed = 2;
+    }
+
+    public void SendToSpawnPoint()
+    {
+        transform.position = _spawnPoint;
+        StartCoroutine(StartGame());
+    }
+
+    IEnumerator StartGame()
+    {
+        yield return new WaitForSeconds(3);
+        UnlockInputs();
     }
 }

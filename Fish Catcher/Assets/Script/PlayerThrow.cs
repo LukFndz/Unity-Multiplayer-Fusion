@@ -36,7 +36,7 @@ public class PlayerThrow : NetworkBehaviour
 
     public override void Spawned()
     {
-        GetComponent<PlayerThrow>().BlockFish();
+        //GetComponent<PlayerThrow>().BlockFish();
     }
 
     #region STANDALONE

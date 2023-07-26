@@ -29,7 +29,8 @@ public class NetworkRunnerHandler : MonoBehaviour
             GameMode = gameMode,
             Scene = sceneRef,
             SessionName = "Normal Lobby",
-            SceneManager = sceneObject
+            SceneManager = sceneObject,
+            PlayerCount = 2
         });
     }
 }

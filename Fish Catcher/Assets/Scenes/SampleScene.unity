@@ -3551,6 +3551,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 248021406}
     m_Modifications:
+    - target: {fileID: 7570486049115608260, guid: ad1ee126dc9182e4287022ecdb8ce5cf, type: 3}
+      propertyPath: m_text
+      value: Warmup
+      objectReference: {fileID: 0}
     - target: {fileID: 7570486049115608262, guid: ad1ee126dc9182e4287022ecdb8ce5cf, type: 3}
       propertyPath: m_Name
       value: Time
