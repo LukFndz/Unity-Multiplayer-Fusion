@@ -48,7 +48,8 @@ public class CanvasPlayer : NetworkBehaviour
     }
 
     private bool _startGame;
-    private bool _starTimer;
+    private bool _endWarmup;
+    private bool _startTimer;
     private bool _endGame;
     
     public void StartTimer()
@@ -58,7 +59,7 @@ public class CanvasPlayer : NetworkBehaviour
     IEnumerator StartTimerRun()
     {
         yield return new WaitForSeconds(3);
-        _starTimer = true;
+        _startTimer = true;
     }
 
     [Networked]
@@ -71,12 +72,25 @@ public class CanvasPlayer : NetworkBehaviour
         if (_playerCount >= 2 && !_startGame)
         {
             timer = 30;
-            _timerPrefab.UpdateTimer(30);
+            _timerPrefab.UpdateTimer(30.ToString());
             _startGame = true;
-            OnStartGame();
         }
 
-        if (_startGame && !_endGame && _starTimer)
+        if(_startGame && !_startTimer && !_endWarmup)
+        {
+            if (timer <= 0)
+            {
+                OnStartGame();
+                _endWarmup = true;
+                timer = 30;
+            }
+
+            SetTimerWarmUp(timer);
+            timer -= Time.deltaTime;
+
+        }
+
+        if (_startGame && !_endGame && _startTimer)
         {
             if(Object.HasStateAuthority)
             {
@@ -86,15 +100,30 @@ public class CanvasPlayer : NetworkBehaviour
         }
     }
 
+    void SetTimerWarmUp(float time, RpcInfo info = default)
+    {
+        _timerPrefab.UpdateTimer("Warmup: " + time.ToString("N0"));
+
+        if (timer <= 0)
+        {
+            timer = 0;
+            _timerPrefab.UpdateTimer("0");
+            OnEndTime();
+            _endGame = true;
+            FindObjectOfType<ScoreManager>().ActiveWinnerCanvas();
+        }
+    }
+
+
     [Rpc(RpcSources.StateAuthority,RpcTargets.All)]
     void RPC_SetTimer(float time, RpcInfo info = default)
     {
-        _timerPrefab.UpdateTimer(time);
+        _timerPrefab.UpdateTimer(time.ToString("N0"));
     
         if(timer <= 0)
         {
             timer = 0;
-            _timerPrefab.UpdateTimer(0);
+            _timerPrefab.UpdateTimer(0.ToString());
             OnEndTime();
             _endGame = true;
             FindObjectOfType<ScoreManager>().ActiveWinnerCanvas();

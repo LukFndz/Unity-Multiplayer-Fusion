@@ -141,6 +141,7 @@ public class PlayerThrow : NetworkBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E) && _haveFish)
             {
+
                 _score++;
                 SendScore();
                 GetComponent<Player>().BlockInputs();
@@ -148,6 +149,21 @@ public class PlayerThrow : NetworkBehaviour
                 _haveFish = false;
             }
         }
+    }
+
+    public void ResetScore()
+    {
+        _score = 0;
+        _haveFish = false;
+        _isInMinigame = false;
+        _isFishing = false;
+        _animatorTabla.gameObject.SetActive(false);
+        _animatorSelect.gameObject.SetActive(false);
+        _animatorSelect.gameObject.SetActive(false);
+        _animatorCaña.Play("Empty");
+        StopAllCoroutines();
+        FindObjectOfType<ScoreManager>().ResetScore();
+        SetScoreUI();
     }
 
     public void SetScoreUI()

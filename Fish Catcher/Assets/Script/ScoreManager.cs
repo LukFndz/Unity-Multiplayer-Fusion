@@ -38,6 +38,13 @@ public class ScoreManager : NetworkBehaviour
         }
     }
 
+    public void ResetScore()
+    {
+        actualWinnerScore = 0;
+        actualWinnerName = "Draw";
+        _txtWinner.UpdateWinner(actualWinnerName);
+    }
+
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     public void RPC_SetWinner(string nick, RpcInfo info = default)
     {
@@ -48,5 +55,4 @@ public class ScoreManager : NetworkBehaviour
     {
         _panelGameOver.SetActive(true);
     }
-
 }

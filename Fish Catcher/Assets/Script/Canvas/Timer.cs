@@ -14,8 +14,8 @@ public class Timer : MonoBehaviour
     }
 
 
-    public void UpdateTimer(float timer)
+    public void UpdateTimer(string timer)
     {
-        _txtTimer.text = timer.ToString("F0");
+        _txtTimer.text = timer;
     }
 }

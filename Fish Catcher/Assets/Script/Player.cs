@@ -37,8 +37,7 @@ public class Player : NetworkBehaviour
             if (data.movementInput.magnitude > 0.01)
             {
                 _rbNet.Rigidbody.MovePosition(_rbNet.Rigidbody.position + direction * Time.fixedDeltaTime * _speed);
-            }
-
+            } 
             if (_turnSpeed > 0)
             {
                 transform.localRotation = Quaternion.Euler(-data.rotationInput.y, data.rotationInput.x, 0);
@@ -70,6 +69,7 @@ public class Player : NetworkBehaviour
     public void SendToSpawnPoint()
     {
         transform.position = _spawnPoint;
+        GetComponent<PlayerThrow>().ResetScore();
         StartCoroutine(StartGame());
     }
 
