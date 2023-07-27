@@ -39,6 +39,7 @@ public class CanvasPlayer : NetworkBehaviour
         OnStartGame += player.BlockInputs;
         OnStartGame += StartTimer;
         OnEndTime += player.BlockInputs;
+        OnEndTime += ShutdownServer;
         _player = player;
     }
 
@@ -58,7 +59,12 @@ public class CanvasPlayer : NetworkBehaviour
     }
     IEnumerator StartTimerRun()
     {
-        yield return new WaitForSeconds(3);
+        _timerPrefab.UpdateTimer("GAME STARTS IN: " + 3);
+        yield return new WaitForSeconds(1);
+        _timerPrefab.UpdateTimer("GAME STARTS IN: " + 2);
+        yield return new WaitForSeconds(1);
+        _timerPrefab.UpdateTimer("GAME STARTS IN: " + 1);
+        yield return new WaitForSeconds(1);
         _startTimer = true;
     }
 
@@ -83,6 +89,7 @@ public class CanvasPlayer : NetworkBehaviour
                 OnStartGame();
                 _endWarmup = true;
                 timer = 30;
+                return;
             }
 
             SetTimerWarmUp(timer);
@@ -100,7 +107,7 @@ public class CanvasPlayer : NetworkBehaviour
         }
     }
 
-    void SetTimerWarmUp(float time, RpcInfo info = default)
+    void SetTimerWarmUp(float time)
     {
         _timerPrefab.UpdateTimer("Warmup: " + time.ToString("N0"));
 
@@ -133,5 +140,17 @@ public class CanvasPlayer : NetworkBehaviour
     public void SetGameCount()
     {
         _playerCount++;
+    }
+
+    public void ShutdownServer()
+    {
+        StartCoroutine(CO_Shutdown());
+    }
+
+    IEnumerator CO_Shutdown()
+    {
+        yield return new WaitForSeconds(3);
+        if(Runner.State == NetworkRunner.States.Running)
+            Runner.Shutdown();
     }
 }
