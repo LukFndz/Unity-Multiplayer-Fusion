@@ -20,7 +20,6 @@ public class CanvasPlayer : NetworkBehaviour
 
     public event Action OnStartGame = delegate { };
 
-
     public void Start()
     {
         OnUpdatePlayers += SetGameCount;
@@ -30,7 +29,6 @@ public class CanvasPlayer : NetworkBehaviour
     {
         timer = 30;
     }
-
 
     Player _player;
     public void SetPlayerInput(Player player)
@@ -150,7 +148,6 @@ public class CanvasPlayer : NetworkBehaviour
     IEnumerator CO_Shutdown()
     {
         yield return new WaitForSeconds(3);
-        if(Runner.State == NetworkRunner.States.Running)
-            Runner.Shutdown();
+        Runner.Shutdown();
     }
 }
