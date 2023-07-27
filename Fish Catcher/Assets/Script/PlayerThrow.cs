@@ -28,14 +28,10 @@ public class PlayerThrow : NetworkBehaviour
         _txtScore = txt;
     }
 
-    private void Start()
+    public override void Spawned()
     {
         FindObjectOfType<CanvasPlayer>().SetPlayerAnim(this);
         _score = 0;
-    }
-
-    public override void Spawned()
-    {
         //GetComponent<PlayerThrow>().BlockFish();
     }
 
