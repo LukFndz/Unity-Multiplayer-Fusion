@@ -22,6 +22,8 @@ namespace Asteroids.SharedSimple
         public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
         {
             // When the local NetworkRunner has shut down, the menu scene is loaded.
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             SceneManager.LoadScene(_menuSceneName);
         }
 

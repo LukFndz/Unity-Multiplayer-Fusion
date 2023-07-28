@@ -48,6 +48,10 @@ public class Player : NetworkBehaviour
 
             if(_speed > 0)
                 _animator.SetFloat("Blend", data.movementInput.magnitude);
+            else
+            {
+                _animator.SetFloat("Blend", 0);
+            }
         }
     }
 

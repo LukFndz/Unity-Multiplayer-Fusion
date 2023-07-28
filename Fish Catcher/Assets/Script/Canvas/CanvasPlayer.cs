@@ -103,6 +103,12 @@ public class CanvasPlayer : NetworkBehaviour
                 timer -= Time.deltaTime;
             }
         }
+
+        if(_endGame)
+        {
+            if (timerEnd.ExpiredOrNotRunning(Runner) == false) return;
+            Runner.Shutdown();
+        }
     }
 
     void SetTimerWarmUp(float time)
@@ -140,14 +146,9 @@ public class CanvasPlayer : NetworkBehaviour
         _playerCount++;
     }
 
+    TickTimer timerEnd;
     public void ShutdownServer()
     {
-        StartCoroutine(CO_Shutdown());
-    }
-
-    IEnumerator CO_Shutdown()
-    {
-        yield return new WaitForSeconds(3);
-        Runner.Shutdown();
+        timerEnd = TickTimer.CreateFromSeconds(Runner, 3f);
     }
 }

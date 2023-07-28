@@ -84,7 +84,7 @@ public class PlayerThrow : NetworkBehaviour
                     GetComponent<Player>().BlockInputs();
                     _animatorSelect.speed = 1;
                     _animatorSelect.Play("Empty");
-                    _animatorCaña.Play("Throw");
+                    _animatorCaña.SetBool("Throw",true);
                     _isFishing = true;
                 }
 
@@ -99,15 +99,17 @@ public class PlayerThrow : NetworkBehaviour
                         {
                             _animatorCaña.Rebind();
                             _animatorCaña.Update(0f);
-                            _animatorCaña.gameObject.SetActive(false);
+                            _animatorCaña.SetBool("Throw", false);
+                            _animatorCaña.SetBool("Back", false);
                             _animatorSelect.gameObject.SetActive(false);
                             _animatorTabla.gameObject.SetActive(true);
-                            GetComponent<Player>().UnlockInputs();
+                            StartCoroutine(WaitUnlockWin());
                             _haveFish = true;
                         }
                         else
                         {
-                            _animatorCaña.Play("Back");
+                            _animatorCaña.SetBool("Throw", false);
+                            _animatorCaña.SetBool("Back", true);
                             StartCoroutine(WaitUnlock());
                         }
                     }
@@ -118,7 +120,22 @@ public class PlayerThrow : NetworkBehaviour
     #endregion
     public void StartMiniGame()
     {
-        _isInMinigame = true;
+        if (Object.HasInputAuthority)
+        {
+            GetComponent<Player>().BlockInputs();
+            _animatorSelect.gameObject.SetActive(true);
+            _animatorSelect.Play("SelectMove");
+            _isInMinigame = true;
+        }
+    }
+
+    public IEnumerator WaitUnlockWin()
+    {
+        yield return new WaitForSeconds(1.2f);
+        _animatorSelect.gameObject.SetActive(false);
+        GetComponent<Player>().UnlockInputs();
+        _animatorCaña.SetBool("Back", false);
+        _animatorCaña.gameObject.SetActive(false);
     }
 
     public IEnumerator WaitUnlock()
@@ -126,6 +143,7 @@ public class PlayerThrow : NetworkBehaviour
         yield return new WaitForSeconds(1.2f);
         _animatorSelect.gameObject.SetActive(false);
         GetComponent<Player>().UnlockInputs();
+        _animatorCaña.SetBool("Back", false);
         _animatorCaña.Play("Empty");
         _isInMinigame = false;
         _isFishing = false;
@@ -137,7 +155,6 @@ public class PlayerThrow : NetworkBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E) && _haveFish)
             {
-
                 _score++;
                 SendScore();
                 GetComponent<Player>().BlockInputs();
@@ -153,6 +170,8 @@ public class PlayerThrow : NetworkBehaviour
         _haveFish = false;
         _isInMinigame = false;
         _isFishing = false;
+        _animatorCaña.SetBool("Throw", false);
+        _animatorCaña.SetBool("Back", false);
         _animatorTabla.gameObject.SetActive(false);
         _animatorSelect.gameObject.SetActive(false);
         _animatorSelect.gameObject.SetActive(false);

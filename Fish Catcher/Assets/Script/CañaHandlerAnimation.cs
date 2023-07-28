@@ -9,10 +9,7 @@ public class CañaHandlerAnimation : MonoBehaviour
 
     public void StartMiniGame()
     {
-        _playerThrow.AnimatorSelect.gameObject.SetActive(true);
-        _playerThrow.AnimatorSelect.Play("SelectMove");
         _playerThrow.StartMiniGame();
-        _player.BlockInputs();
     }
 
 

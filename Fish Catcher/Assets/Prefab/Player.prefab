@@ -300,8 +300,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 3
   Animator: {fileID: 3656012964076416838}
-  TotalWords: 0
-  SyncSettings: 79
+  TotalWords: 1
+  SyncSettings: 111
   FloatAccuracy:
     _value: 0
     _inverse: 0
