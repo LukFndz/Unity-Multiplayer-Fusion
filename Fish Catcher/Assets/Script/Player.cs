@@ -8,6 +8,9 @@ public class Player : NetworkBehaviour
     [SerializeField] private float _turnSpeed;
     [SerializeField] private NetworkRigidbody _rbNet;
 
+    [SerializeField] Animator _animator;
+
+
     Vector3 _spawnPoint;
     public float TurnSpeed { get => _turnSpeed; set => _turnSpeed = value; }
     public float Speed { get => _speed; set => _speed = value; }
@@ -42,6 +45,9 @@ public class Player : NetworkBehaviour
             {
                 transform.localRotation = Quaternion.Euler(-data.rotationInput.y, data.rotationInput.x, 0);
             }
+
+            if(_speed > 0)
+                _animator.SetFloat("Blend", data.movementInput.magnitude);
         }
     }
 
