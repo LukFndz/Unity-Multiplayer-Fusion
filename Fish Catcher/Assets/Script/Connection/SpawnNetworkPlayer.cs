@@ -18,7 +18,9 @@ public class SpawnNetworkPlayer : NetworkBehaviour
         if (Runner.Topology == SimulationConfig.Topologies.Shared)
         {
             Debug.Log("[CUSTOM MESSAGE] On Connected Server - Spawn Player as Local");
-            Runner.Spawn(_player, _spawnPoints[Runner.LocalPlayer.PlayerId].position, Quaternion.identity, Runner.LocalPlayer);
+            var player = Runner.Spawn(_player, _spawnPoints[Runner.LocalPlayer.PlayerId].position, Quaternion.identity, Runner.LocalPlayer);
+            int number = Convert.ToInt32(Runner.LocalPlayer.PlayerId) + 1;
+            player.transform.name = "Player_" + number;
         }
     }
 

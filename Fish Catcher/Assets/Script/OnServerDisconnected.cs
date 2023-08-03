@@ -29,6 +29,7 @@ namespace Asteroids.SharedSimple
 
         public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
         {
+            
         }
 
         public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)

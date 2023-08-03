@@ -83,9 +83,9 @@ public class PlayerThrow : NetworkBehaviour
                 {
                     GetComponent<Player>().BlockInputs();
                     _animatorSelect.speed = 1;
+                    _isFishing = true;
                     _animatorSelect.Play("Empty");
                     _animatorCaña.SetBool("Throw",true);
-                    _isFishing = true;
                 }
 
                 if (_isInMinigame)
@@ -101,8 +101,10 @@ public class PlayerThrow : NetworkBehaviour
                             _animatorCaña.Update(0f);
                             _animatorCaña.SetBool("Throw", false);
                             _animatorCaña.SetBool("Back", false);
+                            _selectTransform.anchoredPosition = new Vector2(0,_selectTransform.anchoredPosition.y);
                             _animatorSelect.gameObject.SetActive(false);
                             _animatorTabla.gameObject.SetActive(true);
+                            _onZone = false;
                             StartCoroutine(WaitUnlockWin());
                             _haveFish = true;
                         }
@@ -135,7 +137,8 @@ public class PlayerThrow : NetworkBehaviour
         _animatorSelect.gameObject.SetActive(false);
         GetComponent<Player>().UnlockInputs();
         _animatorCaña.SetBool("Back", false);
-        _animatorCaña.gameObject.SetActive(false);
+        if(_haveFish)
+            _animatorCaña.gameObject.SetActive(false);
     }
 
     public IEnumerator WaitUnlock()
@@ -156,9 +159,11 @@ public class PlayerThrow : NetworkBehaviour
             if (Input.GetKeyDown(KeyCode.E) && _haveFish)
             {
                 _score++;
+                _isInMinigame = false;
                 SendScore();
                 GetComponent<Player>().BlockInputs();
                 _animatorTabla.Play("BackTabla");
+                _onZone = false;
                 _haveFish = false;
             }
         }
@@ -170,6 +175,7 @@ public class PlayerThrow : NetworkBehaviour
         _haveFish = false;
         _isInMinigame = false;
         _isFishing = false;
+        _onZone = false;
         _animatorCaña.SetBool("Throw", false);
         _animatorCaña.SetBool("Back", false);
         _animatorTabla.gameObject.SetActive(false);

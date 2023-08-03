@@ -8,7 +8,6 @@ public class NetworkPlayer : NetworkBehaviour
     public static NetworkPlayer Local { get; set; }
     public override void Spawned()
     {
-        transform.name = "Player_" + Object.Id;
         if(Object.HasInputAuthority)
         {
             Local = this;
